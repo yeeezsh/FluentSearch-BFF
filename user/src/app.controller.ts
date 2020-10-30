@@ -1,22 +1,19 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './app.service';
-import { CreateUserDto } from './CreateUserDto.dto';
+import { CreateUserDto } from './dtos/createUserDto.dto';
+import { UserRegisterInterface } from './interfaces/userRegister.interface';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private userService: UserService) {}
   
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    try {
-      return createUserDto;
-    } catch(error) {
-      console.log('esus')
-    }
+  async createUser(@Body() body: CreateUserDto) {
+    return this.userService.creatUser(body)
   }
 
   @Get()
-  getHello(): CreateUserDto {
-    return this.userService.getHello();
+  async getAllUser(): Promise<UserRegisterInterface[]> {
+    return this.userService.getAllUser();
   }
 }

@@ -1,14 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './CreateUserDto.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { UserRegisterInterface } from './interfaces/userRegister.interface';
 
 @Injectable()
 export class UserService {
-  getHello(): CreateUserDto {
-    const cat = {
-      "name": "cat",
-      "age": 10,
-      "breed": "milk"
-    }
-    return cat;
+    private readonly userRepo: UserRegisterInterface[] = []
+
+  async creatUser(create: UserRegisterInterface) {
+    this.userRepo.push(create);
   }
+
+  async getAllUser(): Promise<UserRegisterInterface[]> {
+    return this.userRepo
+  }
+
 }
