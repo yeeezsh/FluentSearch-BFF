@@ -11,7 +11,7 @@ const userSchema = new Schema({
 
   //   meta
   createDate: { type: Date, default: Date.now, required: true },
-  updateDate: { type: Date, default: Date.now },
+  updateDate: { type: Date, default: Date.now, required: true },
 });
 
 export default userSchema;
