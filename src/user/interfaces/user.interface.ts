@@ -1,3 +1,4 @@
+import { Document } from 'mongoose';
 import { RoleEnum } from '../schemas/enums/role.enum';
 import { UserToken } from './user-token.interface';
 
@@ -12,3 +13,5 @@ export interface User {
   createDate: Date;
   updateDate: Date;
 }
+
+export type UserDoc = User & Document;
