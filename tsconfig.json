@@ -9,7 +9,6 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": true,
     "lib": ["ES2017", "ES2018"],
     "strictNullChecks": true,
