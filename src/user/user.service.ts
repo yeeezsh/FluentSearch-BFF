@@ -9,6 +9,12 @@ import { RoleEnum } from './schemas/enums/role.enum';
 export class UserService {
   constructor(@Inject(USER_MODEL) private readonly userModel: Model<UserDoc>) {}
 
+  async getAllUser() {
+    const doc = {};
+    const all = await this.userModel.find(doc);
+    return all;
+  }
+
   async createUser(create: CreateUserDto): Promise<UserDoc> {
     const check = await Promise.all([
       this.userModel.findOne({ email: create.email }),
