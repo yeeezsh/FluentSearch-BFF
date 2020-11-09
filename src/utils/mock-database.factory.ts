@@ -1,9 +1,13 @@
-import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Logger } from '@nestjs/common';
+import { MongoMemoryReplSet } from 'mongodb-memory-server';
 import * as mongoose from 'mongoose';
 
-const replSet = new MongoMemoryServer();
+const replSet = new MongoMemoryReplSet({
+  replSet: { storageEngine: 'wiredTiger' },
+});
 
 export const mockDatabaseFactory = async (): Promise<typeof mongoose> => {
+  await replSet.waitUntilRunning();
   const uri = await replSet.getUri();
   const onJest = process.env.JEST_WORKER_ID !== undefined;
   Logger.log(`Running on Jest: ${onJest}`);
