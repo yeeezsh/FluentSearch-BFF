@@ -1,5 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { MOCK_USER_MODEL } from './constants/user.provider.constant';
 import { UserController } from './user.controller';
+import { userProivders } from './user.providers';
+import { UserService } from './user.service';
 
 describe('UserController', () => {
   let controller: UserController;
@@ -7,7 +10,11 @@ describe('UserController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
-    }).compile();
+      providers: [UserService, ...userProivders],
+    })
+      .overrideProvider(MOCK_USER_MODEL)
+      .useValue({})
+      .compile();
 
     controller = module.get<UserController>(UserController);
   });
