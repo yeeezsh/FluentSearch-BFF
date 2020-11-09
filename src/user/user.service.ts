@@ -3,11 +3,15 @@ import { hash } from 'bcryptjs';
 import { Model } from 'mongoose';
 import { USER_MODEL } from './constants/user.provider.constant';
 import { CreateUserDto } from './dtos/user.dto';
+import { UserLoginDto } from './dtos/user.login.dto';
 import { User, UserDoc } from './interfaces/user.interface';
 import { RoleEnum } from './schemas/enums/role.enum';
 
 @Injectable()
 export class UserService {
+  findOne(username: string) {
+    throw new Error('Method not implemented.');
+  }
   constructor(@Inject(USER_MODEL) private readonly userModel: Model<UserDoc>) {}
 
   async getAllUser(): Promise<UserDoc[]> {
@@ -37,6 +41,11 @@ export class UserService {
     const doc = new this.userModel(user);
     const saved = await doc.save();
     return saved;
+  }
+
+  async loginUser(login: UserLoginDto) {
+    const email = this.userModel.find(user => user.email === login.email);
+    return email;
   }
 
   // async create() {
