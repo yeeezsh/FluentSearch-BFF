@@ -6,7 +6,7 @@ export const databaseProviders: Provider[] = [
   {
     provide: DATABASE_CONNECTION,
     useFactory: async (): Promise<typeof mongoose> => {
-      return await mongoose.connect(
+      return mongoose.connect(
         'mongodb://mongodb-sharded:27017/fluent-search-bff',
         {
           user: 'root',

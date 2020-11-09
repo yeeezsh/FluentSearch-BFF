@@ -49,6 +49,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.3",
     "@types/jest": "26.0.10",
+    "@types/mongodb-memory-server": "^2.3.0",
     "@types/mongoose": "^5.7.37",
     "@types/node": "^13.13.30",
     "@types/passport-local": "^1.0.33",
