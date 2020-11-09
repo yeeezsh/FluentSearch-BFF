@@ -9,7 +9,7 @@ export const configProviders: Provider[] = [
     useValue: ((): ConfigurationInterface => {
       const {
         DATABASE_CONNECTION,
-        DATABASE_USERAME,
+        DATABASE_USERNAME,
         DATABASE_PASSWORD,
         DATABASE_AUTH_SOURCE,
         JWT_SECRET_KEY,
@@ -22,7 +22,7 @@ export const configProviders: Provider[] = [
           connection:
             DATABASE_CONNECTION ||
             'mongodb://mongodb-sharded:27017/fluent-search-bff',
-          username: DATABASE_USERAME || 'root',
+          username: DATABASE_USERNAME || 'root',
           password: DATABASE_PASSWORD || 'FluentSearch.BFF.DB.Password',
           authSource: DATABASE_AUTH_SOURCE || 'admin',
         },
