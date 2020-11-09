@@ -1,14 +1,18 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import * as mongoose from 'mongoose';
 import * as request from 'supertest';
 import { DATABASE_CONNECTION } from '../src/database/constants/database.constant';
-import { mockDatabaseFactory } from '../src/utils/mock-database.factory';
+import {
+  mockDatabaseFactory,
+  replSet,
+} from '../src/utils/mock-database.factory';
 import { AppModule } from './../src/app.module';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
@@ -20,6 +24,12 @@ describe('AppController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
+  });
+
+  afterAll(async () => {
+    await app.close();
+    await mongoose.disconnect();
+    await replSet.stop();
   });
 
   it('/ (GET)', () => {
