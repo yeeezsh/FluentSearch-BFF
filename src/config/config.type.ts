@@ -1,5 +1,5 @@
 import { ConfigEnum } from './config.enum';
 
-export type ConfigType = {
+export type ProcessConfigType = {
   [key in ConfigEnum]: string;
 };

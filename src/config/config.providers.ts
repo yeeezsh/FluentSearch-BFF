@@ -1,7 +1,7 @@
 import { Provider } from '@nestjs/common';
 import { APP_CONFIG } from './config.constant';
 import { ConfigurationInterface } from './config.interface';
-import { ConfigType } from './config.type';
+import { ProcessConfigType } from './config.type';
 
 export const configProviders: Provider[] = [
   {
@@ -16,7 +16,7 @@ export const configProviders: Provider[] = [
         JWT_EXPIRES,
         OPS_KEY,
         ORIGIN,
-      } = process.env as ConfigType;
+      } = process.env as ProcessConfigType;
       return {
         database: {
           connection:
