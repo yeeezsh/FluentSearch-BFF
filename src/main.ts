@@ -11,12 +11,12 @@ async function bootstrap() {
     .select(ConfigModule)
     .get(APP_CONFIG);
 
-  app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
     origin: [config.origin],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
+  app.useGlobalPipes(new ValidationPipe());
 
   const options = new DocumentBuilder()
     .setTitle('Fluent Search BFF')
