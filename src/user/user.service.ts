@@ -3,6 +3,7 @@ import { hash } from 'bcryptjs';
 import { Model } from 'mongoose';
 import { USER_MODEL } from './constants/user.provider.constant';
 import { CreateUserDto } from './dtos/user.dto';
+import { UserLoginDto } from './dtos/user.login.dto';
 import { User, UserDoc } from './interfaces/user.interface';
 import { RoleEnum } from './schemas/enums/role.enum';
 
@@ -38,6 +39,8 @@ export class UserService {
     const saved = await doc.save();
     return saved;
   }
+
+  async loginUser(login: UserLoginDto) {}
 
   // async create() {
   //   try {
