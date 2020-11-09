@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MOCK_USER_MODEL } from './constants/user.provider.constant';
+import { USER_MODEL } from './constants/user.provider.constant';
 import { UserController } from './user.controller';
 import { userProivders } from './user.providers';
 import { UserService } from './user.service';
@@ -12,7 +12,7 @@ describe('UserController', () => {
       controllers: [UserController],
       providers: [UserService, ...userProivders],
     })
-      .overrideProvider(MOCK_USER_MODEL)
+      .overrideProvider(USER_MODEL)
       .useValue({})
       .compile();
 
