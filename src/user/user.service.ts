@@ -31,7 +31,7 @@ export class UserService {
 
     const user: User = {
       ...create,
-      role: UserRoleEnum.freeUser,
+      role: UserRoleEnum.user,
       password: await hash(create.password, 'verystrongsalt@123'),
       createDate: new Date(),
       updateDate: new Date(),
