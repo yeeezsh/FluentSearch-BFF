@@ -33,7 +33,9 @@ export class UserService {
       ...payload,
       email: [payload.mainEmail],
       //TODO: use from config module
-      password: await hash(payload.password, 'verystrongsalt@123'),
+      //TODO: fix hash password
+      // password: await hash(payload.password, 'VeryStrongSalt@1234567890!'),
+      password: payload.password,
       oauth: [],
       role: UserRoleEnum.user,
       package: UserPackageEnum.freeUser,
