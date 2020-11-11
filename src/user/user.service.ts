@@ -44,8 +44,15 @@ export class UserService {
   }
 
   async loginUser(login: UserLoginDto) {
-    const email = this.userModel.find(user => user.email === login.email);
-    return email;
+    const user = this.userModel.findOne({ email: login.email });
+    if (!user) {
+      throw new HttpException('user is not exist', HttpStatus.UNAUTHORIZED);
+    }
+    // const auth = await hash;
+    // if (!auth) {
+    //   throw new HttpException('password invalid', HttpStatus.UNAUTHORIZED);
+    // }
+    return user;
   }
 
   // async create() {
