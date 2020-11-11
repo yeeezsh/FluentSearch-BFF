@@ -3,18 +3,18 @@ import { hash } from 'bcryptjs';
 import { Model } from 'mongoose';
 import { USER_MODEL } from './constants/user.provider.constant';
 import { CreateUserDto } from './dtos/user.dto';
-import { UserLoginDto } from './dtos/user.login.dto';
 import { User, UserDoc } from './interfaces/user.interface';
 import { UserRoleEnum } from './schemas/enums/user-role.enum';
 
 @Injectable()
 export class UserService {
-  findOne(username: string) {
-    throw new Error('Method not implemented.');
-  }
   constructor(@Inject(USER_MODEL) private readonly userModel: Model<UserDoc>) {}
 
-  async getAllUser(): Promise<UserDoc[]> {
+  findOne(_id: string) {
+    throw new Error('Method not implemented.');
+  }
+
+  async getUsers(): Promise<UserDoc[]> {
     const doc = {};
     const all = await this.userModel.find(doc);
     return all;
@@ -42,25 +42,4 @@ export class UserService {
     const saved = await doc.save();
     return saved;
   }
-
-  async loginUser(login: UserLoginDto) {
-    const user = this.userModel.findOne({ email: login.email });
-    if (!user) {
-      throw new HttpException('user is not exist', HttpStatus.UNAUTHORIZED);
-    }
-    // const auth = await hash;
-    // if (!auth) {
-    //   throw new HttpException('password invalid', HttpStatus.UNAUTHORIZED);
-    // }
-    return user;
-  }
-
-  // async create() {
-  //   try {
-  //     const doc = new this.userModel();
-  //     doc.save();
-  //   } catch (err) {
-  //     throw err;
-  //   }
-  // }
 }
