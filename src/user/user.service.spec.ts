@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Types } from 'mongoose';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { mockIndexDuplicatedErrorMsg } from '../common/exception/mongo-error.exception.spec';
 import { DATABASE_CONNECTION } from '../database/constants/database.constant';
@@ -8,14 +9,16 @@ import { CreateUserDto } from './dtos/user.dto';
 import { userProivders } from './user.providers';
 import { UserService } from './user.service';
 
-describe('UserService', () => {
+describe('UserService tests', () => {
   let service: UserService;
+  let id: Types.ObjectId;
+
+  const expectedEmailTest = 'test@mail.com';
   const mockCreateUserDto: CreateUserDto = {
-    mainEmail: 'test@mail.com',
+    mainEmail: expectedEmailTest,
     name: 'test name',
     password: '12345678',
   };
-  const expectedEmail = 'test@mail.com';
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -29,23 +32,36 @@ describe('UserService', () => {
       .compile();
 
     service = module.get<UserService>(UserService);
+    const user = await service.createUser(mockCreateUserDto);
+    id = user._id;
   });
 
-  it('should be defined', () => {
+  it('Should be defined', () => {
     expect(service).toBeDefined();
   });
 
-  it('Should create a user correctly', async () => {
-    const doc = await service.createUser(mockCreateUserDto);
-    const userDoc = await service.findById(doc._id);
-
-    expect(userDoc?.mainEmail).toEqual(expectedEmail);
+  // findById
+  it('Should return user that find by id', async () => {
+    const user = await service.findById(id);
+    expect(user?.mainEmail).toEqual(expectedEmailTest);
   });
 
-  it('Should throw an error when email is duplicated', async () => {
-    try {
-      await service.createUser(mockCreateUserDto);
-    } catch {}
+  // getUsers
+
+  // createUser
+  it('Should create a user correctly', async () => {
+    const expectedEmailTest2 = 'test2@mail.com';
+    const doc = await service.createUser({
+      ...mockCreateUserDto,
+      mainEmail: expectedEmailTest2,
+    });
+
+    const userDoc = await service.findById(doc._id);
+
+    expect(userDoc?.mainEmail).toEqual(expectedEmailTest2);
+  });
+
+  it('Should throw an error IndexDuplicatedError when email is duplicated', async () => {
     const mockErrorInstance = new MongoErrorException(
       mockIndexDuplicatedErrorMsg,
     );
