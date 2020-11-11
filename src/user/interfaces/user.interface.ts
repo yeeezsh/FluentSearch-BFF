@@ -1,13 +1,17 @@
 import { Document } from 'mongoose';
+import { UserPackageEnum } from '../schemas/enums/user-package.enum';
 import { UserRoleEnum } from '../schemas/enums/user-role.enum';
 import { UserToken } from './user-token.interface';
 
 export interface User {
-  role: UserRoleEnum;
   email: string;
   password: string;
   oauth: UserToken[] | [];
   name: string;
+
+  // logic
+  role: UserRoleEnum;
+  package: UserPackageEnum;
 
   //   meta
   createDate: Date;

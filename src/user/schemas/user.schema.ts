@@ -13,7 +13,6 @@ const userSchema = new Schema({
   name: { type: String, required: true },
 
   // logic
-
   role: { type: UserRoleEnum, required: true, enum: userRoleConstant },
   package: { type: UserPackageEnum, required: true, enum: userPackageConstant },
 
