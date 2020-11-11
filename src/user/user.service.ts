@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { UserQuery, UsersQuery } from './@types/user.query.types';
 import { USER_MODEL } from './constants/user.provider.constant';
@@ -12,7 +12,7 @@ import { UserRoleEnum } from './schemas/enums/user-role.enum';
 export class UserService {
   constructor(@Inject(USER_MODEL) private readonly userModel: Model<UserDoc>) {}
 
-  async findById(id: string): Promise<UserQuery | null> {
+  async findById(id: Types.ObjectId): Promise<UserQuery | null> {
     try {
       return this.userModel
         .findById(id)
