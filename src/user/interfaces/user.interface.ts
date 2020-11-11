@@ -4,7 +4,8 @@ import { UserRoleEnum } from '../schemas/enums/user-role.enum';
 import { UserToken } from './user-token.interface';
 
 export interface User {
-  email: string;
+  mainEmail: string;
+  email: string[];
   password: string;
   oauth: UserToken[] | [];
   name: string;

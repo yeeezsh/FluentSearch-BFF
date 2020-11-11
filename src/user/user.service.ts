@@ -31,6 +31,7 @@ export class UserService {
   async createUser(payload: CreateUserDto): Promise<UserDoc> {
     const user: User = {
       ...payload,
+      email: [payload.mainEmail],
       password: await hash(payload.password, 'verystrongsalt@123'),
       oauth: [],
       role: UserRoleEnum.user,
