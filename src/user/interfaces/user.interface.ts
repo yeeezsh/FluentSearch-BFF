@@ -1,9 +1,9 @@
 import { Document } from 'mongoose';
-import { RoleEnum } from '../schemas/enums/role.enum';
+import { UserRoleEnum } from '../schemas/enums/user-role.enum';
 import { UserToken } from './user-token.interface';
 
 export interface User {
-  role: RoleEnum;
+  role: UserRoleEnum;
   email: string;
   password: string;
   oauth: UserToken[] | [];
