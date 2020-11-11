@@ -14,10 +14,11 @@ export class UserService {
     throw new Error('Method not implemented.');
   }
 
-  async getUsers(): Promise<UserDoc[]> {
-    const doc = {};
-    const all = await this.userModel.find(doc);
-    return all;
+  async getUsers(skip = 0, limit = 1000): Promise<UserDoc[]> {
+    return this.userModel
+      .find({})
+      .skip(skip)
+      .limit(limit);
   }
 
   async createUser(create: CreateUserDto): Promise<UserDoc> {
