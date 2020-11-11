@@ -1,5 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
+import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { UserQuery, UsersQuery } from './@types/user.query.types';
 import { USER_MODEL } from './constants/user.provider.constant';
 import { CreateUserDto } from './dtos/user.dto';
@@ -12,19 +13,29 @@ export class UserService {
   constructor(@Inject(USER_MODEL) private readonly userModel: Model<UserDoc>) {}
 
   async findById(id: string): Promise<UserQuery | null> {
-    return this.userModel
-      .findById(id)
-      .select({ password: 0 })
-      .lean();
+    try {
+      return this.userModel
+        .findById(id)
+        .select({ password: 0 })
+        .lean();
+    } catch (err) {
+      Logger.error(err);
+      throw new MongoErrorException(err);
+    }
   }
 
   async getUsers(skip = 0, limit = 1000): Promise<UsersQuery> {
-    return this.userModel
-      .find({})
-      .select({ password: 0 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
+    try {
+      return this.userModel
+        .find({})
+        .select({ password: 0 })
+        .skip(skip)
+        .limit(limit)
+        .lean();
+    } catch (err) {
+      Logger.error(err);
+      throw new MongoErrorException(err);
+    }
   }
 
   async createUser(payload: CreateUserDto): Promise<UserDoc> {
@@ -49,7 +60,7 @@ export class UserService {
       return saved;
     } catch (err) {
       Logger.error(err);
-      throw err;
+      throw new MongoErrorException(err);
     }
   }
 }
