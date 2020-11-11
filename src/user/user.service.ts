@@ -32,6 +32,7 @@ export class UserService {
     const user: User = {
       ...payload,
       email: [payload.mainEmail],
+      //TODO: use from config module
       password: await hash(payload.password, 'verystrongsalt@123'),
       oauth: [],
       role: UserRoleEnum.user,
