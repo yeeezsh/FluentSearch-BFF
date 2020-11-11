@@ -7,7 +7,7 @@ import { userRoleConstant, UserRoleEnum } from './enums/user-role.enum';
 import { userTokenSchema } from './user-token.schema';
 
 const userSchema = new Schema({
-  email: { type: [String], required: true },
+  email: { type: [String], required: true, unique: true },
   password: { type: String, required: true },
   oauth: { type: [userTokenSchema], required: false, default: [] },
   name: { type: String, required: true },

@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { hash } from 'bcryptjs';
 import { Model } from 'mongoose';
 import { UsersQuery } from './@types/user.query.types';
@@ -28,18 +28,10 @@ export class UserService {
       .lean();
   }
 
-  async createUser(create: CreateUserDto): Promise<UserDoc> {
-    const check = await Promise.all([
-      this.userModel.findOne({ email: create.email }),
-    ]);
-    const valid = check.filter(e => e);
-    if (valid.length !== 0) {
-      throw new HttpException('email is duplicated', HttpStatus.BAD_REQUEST);
-    }
-
+  async createUser(payload: CreateUserDto): Promise<UserDoc> {
     const user: User = {
-      ...create,
-      password: await hash(create.password, 'verystrongsalt@123'),
+      ...payload,
+      password: await hash(payload.password, 'verystrongsalt@123'),
       oauth: [],
       role: UserRoleEnum.user,
       package: UserPackageEnum.freeUser,
@@ -48,8 +40,13 @@ export class UserService {
       updateDate: new Date(),
     };
 
-    const doc = new this.userModel(user);
-    const saved = await doc.save();
-    return saved;
+    try {
+      const doc = new this.userModel(user);
+      const saved = await doc.save();
+      return saved;
+    } catch (err) {
+      Logger.error(err);
+      throw err;
+    }
   }
 }
