@@ -16,7 +16,16 @@ export class MongoErrorException {
   msg: string;
   type: MongoHandlingEnum;
 
-  constructor(error: MongoErrorMessageType) {
+  constructor(error: MongoErrorMessageType | any) {
+    if (!error.code) {
+      this.msg = String(error);
+      this.type = MongoHandlingEnum.NotParsed;
+      return {
+        msg: String(error),
+        type: MongoHandlingEnum.NotParsed,
+      };
+    }
+
     this.msg = error.name;
     this.type =
       errorHandlingListConstant.find(el => el.code === error.code)?.type ||
