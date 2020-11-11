@@ -47,6 +47,10 @@ describe('UserService tests', () => {
   });
 
   // getUsers
+  it('Should return all user', async () => {
+    const users = await service.getUsers();
+    expect(users.length).toBe(1);
+  });
 
   // createUser
   it('Should create a user correctly', async () => {
