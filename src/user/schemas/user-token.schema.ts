@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { oAuthProviderConstant } from './enums/provider.enum';
+import { oAuthProviderConstant } from './enums/oauth-provider.enum';
 
 export const userTokenSchema = new Schema(
   {

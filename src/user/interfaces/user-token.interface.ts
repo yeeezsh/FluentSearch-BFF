@@ -1,4 +1,4 @@
-import { OAuthProviderEnum } from '../schemas/enums/provider.enum';
+import { OAuthProviderEnum } from '../schemas/enums/oauth-provider.enum';
 
 export interface UserToken {
   provider: OAuthProviderEnum;
