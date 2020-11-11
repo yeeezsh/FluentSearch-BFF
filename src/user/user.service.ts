@@ -1,7 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { hash } from 'bcryptjs';
 import { Model } from 'mongoose';
-import { UsersQuery } from './@types/user.query.types';
+import { UserQuery, UsersQuery } from './@types/user.query.types';
 import { USER_MODEL } from './constants/user.provider.constant';
 import { CreateUserDto } from './dtos/user.dto';
 import { User, UserDoc } from './interfaces/user.interface';
@@ -12,17 +11,17 @@ import { UserRoleEnum } from './schemas/enums/user-role.enum';
 export class UserService {
   constructor(@Inject(USER_MODEL) private readonly userModel: Model<UserDoc>) {}
 
-  async findOne(id: string): Promise<UsersQuery | null> {
+  async findById(id: string): Promise<UserQuery | null> {
     return this.userModel
       .findById(id)
-      .select({ password: -1 })
+      .select({ password: 0 })
       .lean();
   }
 
   async getUsers(skip = 0, limit = 1000): Promise<UsersQuery> {
     return this.userModel
       .find({})
-      .select({ password: -1 })
+      .select({ password: 0 })
       .skip(skip)
       .limit(limit)
       .lean();
