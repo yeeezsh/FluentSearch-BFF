@@ -10,7 +10,7 @@ import { UserService } from './user.service';
 
 describe('UserService', () => {
   let service: UserService;
-  const mockUserPayload: CreateUserDto = {
+  const mockCreateUserDto: CreateUserDto = {
     mainEmail: 'test@mail.com',
     name: 'test name',
     password: '12345678',
@@ -36,7 +36,7 @@ describe('UserService', () => {
   });
 
   it('Should create a user correctly', async () => {
-    const doc = await service.createUser(mockUserPayload);
+    const doc = await service.createUser(mockCreateUserDto);
     const userDoc = await service.findById(doc._id);
 
     expect(userDoc?.mainEmail).toEqual(expectedEmail);
@@ -44,13 +44,13 @@ describe('UserService', () => {
 
   it('Should throw an error when email is duplicated', async () => {
     try {
-      await service.createUser(mockUserPayload);
+      await service.createUser(mockCreateUserDto);
     } catch {}
     const mockErrorInstance = new MongoErrorException(
       mockIndexDuplicatedErrorMsg,
     );
 
-    await expect(service.createUser(mockUserPayload)).rejects.toEqual(
+    await expect(service.createUser(mockCreateUserDto)).rejects.toEqual(
       mockErrorInstance,
     );
   });
