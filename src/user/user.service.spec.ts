@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import * as mongoose from 'mongoose';
 import { Types } from 'mongoose';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { mockIndexDuplicatedErrorMsg } from '../common/exception/mongo-error.exception.spec';
 import { DATABASE_CONNECTION } from '../database/constants/database.constant';
 import { DatabaseModule } from '../database/database.module';
-import { mockDatabaseFactory } from '../utils/mock-database.factory';
+import { mockDatabaseFactory, replSet } from '../utils/mock-database.factory';
 import { CreateUserDto } from './dtos/user.dto';
 import { userProivders } from './user.providers';
 import { UserService } from './user.service';
@@ -12,6 +13,7 @@ import { UserService } from './user.service';
 describe('UserService tests', () => {
   let service: UserService;
   let id: Types.ObjectId;
+  let module: TestingModule;
 
   const expectedEmailTest = 'test@mail.com';
   const mockCreateUserDto: CreateUserDto = {
@@ -21,7 +23,7 @@ describe('UserService tests', () => {
   };
 
   beforeAll(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       imports: [DatabaseModule],
       providers: [...userProivders, UserService],
     })
@@ -34,6 +36,12 @@ describe('UserService tests', () => {
     service = module.get<UserService>(UserService);
     const user = await service.createUser(mockCreateUserDto);
     id = user._id;
+  });
+
+  afterAll(async () => {
+    await module.close();
+    await mongoose.disconnect();
+    await replSet.stop();
   });
 
   it('Should be defined', () => {
