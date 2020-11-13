@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Response } from 'express';
 import { AuthenticationService } from '../common/authentication/authentication.service';
 import { CreateUserDto } from './@dtos/user.dto';
 import { UserLoginDto } from './@dtos/user.login.dto';
@@ -24,11 +25,10 @@ export class UserController {
   }
 
   @Post('/auth/login')
-  //TODO: cookie
   async loginUser(@Body() body: UserLoginDto, @Res() res: Response) {
     const { email, password } = body;
-    const user = await this.authService.validateUser(email, password);
-    //const cookie = this.authService.getCookie(user._id);
-    return;
+    const cookie = await this.authService.validateUser(email, password);
+    res.setHeader('Set-Cookie', cookie.email);
+    return res.send({ ...cookie });
   }
 }
