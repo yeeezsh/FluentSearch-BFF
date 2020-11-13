@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserRoleEnum } from '../../user/schemas/enums/user-role.enum';
+import { ConfigService } from 'nestjs-config/dist/module/config.service';
 import { UserLoginService } from '../../user/user.login.service';
 
 @Injectable()
@@ -8,16 +8,15 @@ export class AuthenticationService {
   constructor(
     private readonly userLoginService: UserLoginService,
     private readonly jwtService: JwtService,
+    private conficService: ConfigService,
   ) {}
 
-  async validateUser(
-    email: string,
-    password: string,
-  ): Promise<{
-    email: string;
-    role: UserRoleEnum;
-    Authorization: string;
-  }> {
+  async validateUser(email: string, password: string) {
+    // : Promise<{
+    //   email: string;
+    //   role: UserRoleEnum;
+    //   Authorization: string;
+    // }> {
     try {
       const user = await this.userLoginService.userLogin({
         email: email,
@@ -32,12 +31,14 @@ export class AuthenticationService {
         email: user?.mainEmail,
         role: user?.role,
       };
-      const sign = await this.jwtService.signAsync(payload);
-      return {
-        ...payload,
-        Authorization: sign,
-      };
-      //return `Authentication=${sign}; HttpOnly; Path=/; Max-Age=${.get('JWT_EXPIRATION_TIME')}`;
+      const token = await this.jwtService.signAsync(payload);
+      // return {
+      //   ...payload,
+      //   Authorization: sign,
+      // };
+      return `Authentication=${token}; Max-Age=${this.conficService.get(
+        'JWT_EXPIRATION_TIME',
+      )}`;
     } catch (err) {
       throw err;
     }
