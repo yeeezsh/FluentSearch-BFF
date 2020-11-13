@@ -14,7 +14,7 @@ export class AuthenticationService {
     email: string,
     password: string,
   ): Promise<{
-    email: string | undefined;
+    email: string;
     role: UserRoleEnum;
     Authorization: string;
   }> {
