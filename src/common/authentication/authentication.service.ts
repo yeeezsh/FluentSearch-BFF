@@ -36,9 +36,7 @@ export class AuthenticationService {
       //   ...payload,
       //   Authorization: sign,
       // };
-      return `Authentication=${token}; Max-Age=${this.conficService.get(
-        'JWT_EXPIRATION_TIME',
-      )}`;
+      return `Authentication=${token}`;
     } catch (err) {
       throw err;
     }
