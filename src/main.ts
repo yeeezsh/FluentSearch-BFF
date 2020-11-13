@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 import { APP_CONFIG } from './config/config.constant';
 import { ConfigurationInterface } from './config/config.interface';
@@ -18,6 +19,7 @@ async function bootstrap() {
     credentials: true,
   });
   app.useGlobalPipes(new ValidationPipe());
+  app.use(cookieParser());
 
   const options = new DocumentBuilder()
     .setTitle('Fluent Search BFF')
