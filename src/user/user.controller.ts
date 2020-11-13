@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { AuthenticationService } from '../common/authentication/authentication.service';
+import { CreateUserDto } from './@dtos/user.dto';
+import { UserLoginDto } from './@dtos/user.login.dto';
 import { UsersQuery } from './@types/user.query.types';
-import { CreateUserDto } from './dtos/user.dto';
-import { UserLoginDto } from './dtos/user.login.dto';
 import { UserService } from './user.service';
 
 @Controller('user')

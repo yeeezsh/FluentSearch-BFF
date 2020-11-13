@@ -1,10 +1,10 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
+import { CreateUserDto } from './@dtos/user.dto';
+import { User, UserDoc } from './@interfaces/user.interface';
 import { UserQuery, UsersQuery } from './@types/user.query.types';
 import { USER_MODEL } from './constants/user.provider.constant';
-import { CreateUserDto } from './dtos/user.dto';
-import { User, UserDoc } from './interfaces/user.interface';
 import { UserPackageEnum } from './schemas/enums/user-package.enum';
 import { UserRoleEnum } from './schemas/enums/user-role.enum';
 

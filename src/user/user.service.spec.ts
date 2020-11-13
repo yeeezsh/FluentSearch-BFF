@@ -5,7 +5,7 @@ import { mockIndexDuplicatedErrorMsg } from '../common/exception/mongo-error.exc
 import { DATABASE_CONNECTION } from '../database/constants/database.constant';
 import { DatabaseModule } from '../database/database.module';
 import { mockDatabaseFactory } from '../utils/mock-database.factory';
-import { CreateUserDto } from './dtos/user.dto';
+import { CreateUserDto } from './@dtos/user.dto';
 import { userProivders } from './user.providers';
 import { UserService } from './user.service';
 
