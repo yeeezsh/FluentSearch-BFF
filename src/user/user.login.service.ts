@@ -23,7 +23,6 @@ export class UserLoginService {
       if (!user) {
         throw new HttpException('email is not exist', HttpStatus.UNAUTHORIZED);
       }
-      //FIXME: fix hash.compare
       const auth = await bcrypt.compare(login.password, user.password);
       if (!auth) {
         throw new HttpException('invalid password', HttpStatus.UNAUTHORIZED);
