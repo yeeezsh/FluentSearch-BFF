@@ -28,7 +28,7 @@ export class UserController {
   async loginUser(@Body() body: UserLoginDto, @Res() res: Response) {
     const { email, password } = body;
     const cookie = await this.authService.validateUser(email, password);
-    res.setHeader('Set-Cookie', cookie.email);
-    return res.send({ ...cookie });
+    res.setHeader('Set-Cookie', cookie);
+    return res.send(email);
   }
 }
