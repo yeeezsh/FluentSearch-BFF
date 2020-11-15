@@ -31,4 +31,10 @@ export class UserController {
     res.setHeader('Set-Cookie', cookie);
     return res.sendStatus(200);
   }
+
+  @Post('/auth/logout')
+  async logoutUser(@Res() res: Response) {
+    res.setHeader('Set-Cookie', await this.authService.logoutUser());
+    return res.sendStatus(200);
+  }
 }
