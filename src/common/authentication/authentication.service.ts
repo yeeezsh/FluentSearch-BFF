@@ -41,4 +41,8 @@ export class AuthenticationService {
       throw err;
     }
   }
+
+  async logoutUser() {
+    return `Authentication=''`;
+  }
 }
