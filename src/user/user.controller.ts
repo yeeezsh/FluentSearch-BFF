@@ -29,7 +29,6 @@ export class UserController {
     const { email, password } = body;
     const cookie = await this.authService.validateUser(email, password);
     res.setHeader('Set-Cookie', cookie);
-    //TODO: what should I return? I understand that I shouldn't send a password, right??
-    return res.send(email);
+    return res.sendStatus(200);
   }
 }
