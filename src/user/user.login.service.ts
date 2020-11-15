@@ -16,8 +16,7 @@ import { USER_MODEL } from './constants/user.provider.constant';
 export class UserLoginService {
   constructor(@Inject(USER_MODEL) private readonly userModel: Model<UserDoc>) {}
 
-  //TODO: what type of promise
-  async userLogin(login: UserLoginDto) {
+  async userLogin(login: UserLoginDto): Promise<UserQuery | null> {
     try {
       const user = await this.userModel.findOne({ email: login.email }).lean();
       if (!user) {
