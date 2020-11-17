@@ -10,6 +10,7 @@ import { Model } from 'mongoose';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { UserLoginDto } from './@dtos/user.login.dto';
 import { UserDoc } from './@interfaces/user.interface';
+import { UserQuery } from './@types/user.query.types';
 import { USER_MODEL } from './constants/user.provider.constant';
 
 @Injectable()
@@ -18,7 +19,10 @@ export class UserLoginService {
 
   async userLogin(login: UserLoginDto): Promise<UserQuery | null> {
     try {
-      const user = await this.userModel.findOne({ email: login.email }).lean();
+      const user = await this.userModel
+        .findOne({ email: login.email })
+        .select({ password: 0 })
+        .lean();
       if (!user) {
         throw new HttpException('email is not exist', HttpStatus.UNAUTHORIZED);
       }
