@@ -33,7 +33,18 @@ describe('UserLoginService tests', () => {
       .useValue({})
       .overrideProvider(USER_MODEL)
       .useValue({
-        findOne: jest.fn().mockImplementation(() => {}),
+        findOne: jest.fn().mockImplementation(() => {
+          return {
+            mainEmail: expectedEmailTest,
+            email: [expectedEmailTest],
+            password: '12345678',
+            name: 'test name',
+            role: 'user',
+            package: 'free-user',
+            creatDate: Date,
+            updateDate: Date,
+          };
+        }),
       })
       .compile();
 
