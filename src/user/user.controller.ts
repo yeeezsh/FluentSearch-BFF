@@ -18,5 +18,13 @@ export class UserController {
   async createUser(@Body() body: CreateUserDto): Promise<void> {
     await this.userService.createUser(body);
     return;
+    } catch (error) {
+      const catchErr = (error as unknown) as MongoErrorException;
+
+      if (catchErr.type == MongoHandlingEnum.IndexDuplicated)
+        throw new BadRequestException('Duplicated email');
+
+      throw new InternalServerErrorException();
+    }
   }
 }
