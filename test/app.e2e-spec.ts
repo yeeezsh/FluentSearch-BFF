@@ -27,9 +27,9 @@ describe('AppController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await app.close();
     await mongoose.disconnect();
     await replSet.stop();
+    await app.close();
   });
 
   it('/ (GET)', () => {
