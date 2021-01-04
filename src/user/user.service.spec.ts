@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 import { Types } from 'mongoose';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { mockIndexDuplicatedErrorMsg } from '../common/exception/mongo-error.exception.spec';
+import { ConfigModule } from '../config/config.module';
 import { DATABASE_CONNECTION } from '../database/constants/database.constant';
 import { DatabaseModule } from '../database/database.module';
 import { mockDatabaseFactory, replSet } from '../utils/mock-database.factory';
@@ -24,7 +25,7 @@ describe('UserService tests', () => {
 
   beforeAll(async () => {
     module = await Test.createTestingModule({
-      imports: [DatabaseModule],
+      imports: [DatabaseModule, ConfigModule],
       providers: [...userProivders, UserService],
     })
       .overrideProvider(DATABASE_CONNECTION)
