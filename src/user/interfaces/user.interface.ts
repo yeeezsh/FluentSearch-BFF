@@ -1,6 +1,7 @@
 import { Document } from 'mongoose';
 import { UserPackageEnum } from '../schemas/enums/user-package.enum';
 import { UserRoleEnum } from '../schemas/enums/user-role.enum';
+import { UserZoneEnum } from '../schemas/enums/user.zone.enum';
 import { UserToken } from './user-token.interface';
 
 export interface User {
@@ -15,6 +16,8 @@ export interface User {
   package: UserPackageEnum;
 
   //   meta
+  zone: UserZoneEnum;
+  deactivate?: boolean;
   createDate: Date;
   updateDate: Date;
 }

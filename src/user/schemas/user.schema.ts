@@ -20,6 +20,11 @@ const userSchema = new Schema({
 
   //   meta
   zone: { type: UserZoneEnum, default: UserZoneEnum.TH1, required: true },
+  deactivate: {
+    type: Boolean || undefined,
+    required: false,
+    default: undefined,
+  },
   createDate: { type: Date, default: Date.now, required: true },
   updateDate: { type: Date, default: Date.now, required: true },
 });
