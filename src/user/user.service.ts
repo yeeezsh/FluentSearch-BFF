@@ -7,6 +7,7 @@ import { CreateUserDto } from './dtos/user.dto';
 import { User, UserDoc } from './interfaces/user.interface';
 import { UserPackageEnum } from './schemas/enums/user-package.enum';
 import { UserRoleEnum } from './schemas/enums/user-role.enum';
+import { UserZoneEnum } from './schemas/enums/user.zone.enum';
 
 @Injectable()
 export class UserService {
@@ -49,6 +50,7 @@ export class UserService {
       oauth: [],
       role: UserRoleEnum.user,
       package: UserPackageEnum.freeUser,
+      zone: UserZoneEnum.TH1,
 
       createDate: new Date(),
       updateDate: new Date(),
