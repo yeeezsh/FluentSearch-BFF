@@ -37,7 +37,7 @@ export const configProviders: Provider[] = [
           'development',
         origin: new RegExp(ORIGIN),
         bcrypt: {
-          round: Number(BCRYPT_SECRET_ROUND),
+          round: Number(BCRYPT_SECRET_ROUND) || 10,
         },
       };
     })(),
