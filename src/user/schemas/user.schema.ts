@@ -4,6 +4,7 @@ import {
   UserPackageEnum,
 } from './enums/user-package.enum';
 import { userRoleConstant, UserRoleEnum } from './enums/user-role.enum';
+import { UserZoneEnum } from './enums/user.zone.enum';
 import { userTokenSchema } from './user-token.schema';
 
 const userSchema = new Schema({
@@ -18,6 +19,7 @@ const userSchema = new Schema({
   package: { type: UserPackageEnum, required: true, enum: userPackageConstant },
 
   //   meta
+  zone: { type: UserZoneEnum, default: UserZoneEnum.TH1, required: true },
   createDate: { type: Date, default: Date.now, required: true },
   updateDate: { type: Date, default: Date.now, required: true },
 });
