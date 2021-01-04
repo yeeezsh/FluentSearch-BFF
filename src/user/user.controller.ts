@@ -8,12 +8,12 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get()
+  @Get('/')
   async getUsers(): Promise<UsersQuery> {
     return this.userService.getUsers();
   }
 
-  @Post('/user')
+  @Post('/register')
   @UsePipes(new UserTrimPipe())
   async createUser(@Body() body: CreateUserDto): Promise<void> {
     await this.userService.createUser(body);
