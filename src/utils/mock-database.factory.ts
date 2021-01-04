@@ -15,5 +15,6 @@ export const mockDatabaseFactory = async (): Promise<typeof mongoose> => {
   return await mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   });
 };
