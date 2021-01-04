@@ -1,6 +1,9 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
+import { genSalt, hash } from 'bcryptjs';
 import { Model, Types } from 'mongoose';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
+import { APP_CONFIG } from '../config/config.constant';
+import { ConfigurationInterface } from '../config/config.interface';
 import { UserQuery, UsersQuery } from './@types/user.query.types';
 import { USER_MODEL } from './constants/user.provider.constant';
 import { CreateUserDto } from './dtos/user.dto';
@@ -11,7 +14,10 @@ import { UserZoneEnum } from './schemas/enums/user.zone.enum';
 
 @Injectable()
 export class UserService {
-  constructor(@Inject(USER_MODEL) private readonly userModel: Model<UserDoc>) {}
+  constructor(
+    @Inject(USER_MODEL) private readonly userModel: Model<UserDoc>,
+    @Inject(APP_CONFIG) private readonly appConfig: ConfigurationInterface,
+  ) {}
 
   async findById(id: Types.ObjectId): Promise<UserQuery | null> {
     try {
@@ -40,18 +46,19 @@ export class UserService {
   }
 
   async createUser(payload: CreateUserDto): Promise<UserDoc> {
+    const { round } = this.appConfig.bcrypt;
+    const salt = await genSalt(round);
     const user: User = {
       ...payload,
       email: [payload.mainEmail],
-      //TODO: use from config module
-      //TODO: fix hash password
-      // password: await hash(payload.password, 'VeryStrongSalt@1234567890!'),
-      password: payload.password,
+      password: await hash(payload.password, salt),
       oauth: [],
+
       role: UserRoleEnum.user,
       package: UserPackageEnum.freeUser,
-      zone: UserZoneEnum.TH1,
 
+      // meta
+      zone: UserZoneEnum.TH1,
       createDate: new Date(),
       updateDate: new Date(),
     };
