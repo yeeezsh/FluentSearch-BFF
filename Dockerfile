@@ -13,5 +13,6 @@ COPY yarn.lock yarn.lock
 COPY package.json package.json
 RUN yarn install
 COPY . .
-CMD [ "yarn", "start" ]
+RUN yarn build
+CMD [ "yarn", "start:prod" ]
 EXPOSE 3000
