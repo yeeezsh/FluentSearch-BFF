@@ -2,9 +2,9 @@ version: '3.4'
 services:
   fluentsearch-bff:
     container_name: FluentSearch-BFF
-    # restart: always
-    # depends_on:
-    #   - fluentsearch-bff-mongos
+    restart: always
+    depends_on:
+      - fluentsearch-bff-mongos
     environment:
       NODE_ENV: 'development'
       TZ: Asia/Bangkok
