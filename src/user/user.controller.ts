@@ -9,7 +9,7 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { MongoHandlingEnum } from '../common/exception/@enums/mongo-handling.enum';
-import { DuplcatedEmailException } from '../common/exception/duplicate-email.exception';
+import { DuplcatedEmailException } from '../common/exception/duplicated-email.exception';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { UsersQuery } from './@types/user.query.types';
 import { CreateUserDto } from './dtos/user.dto';
