@@ -26,7 +26,7 @@ describe('UserController (e2e)', () => {
     })
       .overrideProvider(DATABASE_CONNECTION)
       .useFactory({
-        factory: async () => mockDatabaseFactory(),
+        factory: async () => await mockDatabaseFactory(),
       })
       .compile();
 
