@@ -38,7 +38,7 @@ export const configProviders: Provider[] = [
           'development',
         origin: new RegExp(ORIGIN),
         bcrypt: {
-          round: Number(BCRYPT_SECRET_ROUND) || 10,
+          round: Number(BCRYPT_SECRET_ROUND || 10),
         },
         port: Number(PORT || 5000),
       };
