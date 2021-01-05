@@ -4,6 +4,8 @@
 
 ## Installation
 
+install dependencies
+
 ```bash
 $ yarn
 ```
@@ -32,6 +34,12 @@ $ yarn test:e2e
 
 # test coverage
 $ yarn test:cov
+```
+
+## Docker
+
+```bash
+$ docker-compose -f docker-compose.dev.yml up --build
 ```
 
 ## License
