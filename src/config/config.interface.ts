@@ -15,4 +15,5 @@ export interface ConfigurationInterface {
   bcrypt: {
     round: number;
   };
+  port: number;
 }

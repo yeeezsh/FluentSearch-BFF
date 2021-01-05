@@ -17,14 +17,15 @@ export const configProviders: Provider[] = [
         OPS_KEY,
         ORIGIN,
         BCRYPT_SECRET_ROUND,
+        PORT,
       } = process.env as ProcessConfigType;
       return {
         database: {
           connection:
             DATABASE_CONNECTION ||
-            'mongodb://mongodb-sharded:27017/fluent-search-bff',
+            'mongodb://mongodb-sharded:27017/fluentsearch-bff',
           username: DATABASE_USERNAME || 'root',
-          password: DATABASE_PASSWORD || 'FluentSearch.BFF.DB.Password',
+          password: DATABASE_PASSWORD || 'FluentSearch@BFF.MongoDB',
           authSource: DATABASE_AUTH_SOURCE || 'admin',
         },
         jwt: {
@@ -39,6 +40,7 @@ export const configProviders: Provider[] = [
         bcrypt: {
           round: Number(BCRYPT_SECRET_ROUND) || 10,
         },
+        port: Number(PORT || 5000),
       };
     })(),
   },
