@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Get,
@@ -10,6 +9,7 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { MongoHandlingEnum } from '../common/exception/@enums/mongo-handling.enum';
+import { DuplcatedEmailException } from '../common/exception/duplicate-email.exception';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { UsersQuery } from './@types/user.query.types';
 import { CreateUserDto } from './dtos/user.dto';
@@ -38,7 +38,7 @@ export class UserController {
       const catchErr = (error as unknown) as MongoErrorException;
 
       if (catchErr.type == MongoHandlingEnum.IndexDuplicated)
-        throw new BadRequestException('Duplicated email');
+        throw new DuplcatedEmailException();
 
       throw new InternalServerErrorException();
     }
