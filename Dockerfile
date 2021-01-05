@@ -8,7 +8,7 @@ VOLUME . .
 CMD ["yarn", "start:dev"]
 EXPOSE 3000
 
-FROM node:14-slim AS build
+FROM node:14-slim AS prod
 COPY yarn.lock yarn.lock
 COPY package.json package.json
 RUN yarn install
