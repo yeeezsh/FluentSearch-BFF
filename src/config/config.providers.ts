@@ -16,14 +16,15 @@ export const configProviders: Provider[] = [
         JWT_EXPIRES,
         OPS_KEY,
         ORIGIN,
+        PORT,
       } = process.env as ProcessConfigType;
       return {
         database: {
           connection:
             DATABASE_CONNECTION ||
-            'mongodb://mongodb-sharded:27017/fluent-search-bff',
+            'mongodb://mongodb-sharded:27017/fluentsearch-bff',
           username: DATABASE_USERNAME || 'root',
-          password: DATABASE_PASSWORD || 'FluentSearch.BFF.DB.Password',
+          password: DATABASE_PASSWORD || 'FluentSearch@BFF.MongoDB',
           authSource: DATABASE_AUTH_SOURCE || 'admin',
         },
         jwt: {
@@ -35,6 +36,7 @@ export const configProviders: Provider[] = [
           (process.env.NODE_ENV as ConfigurationInterface['node_env']) ||
           'development',
         origin: new RegExp(ORIGIN),
+        port: Number(PORT || 5000),
       };
     })(),
   },
