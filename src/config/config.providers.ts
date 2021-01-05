@@ -22,9 +22,9 @@ export const configProviders: Provider[] = [
         database: {
           connection:
             DATABASE_CONNECTION ||
-            'mongodb://mongodb-sharded:27017/fluent-search-bff',
+            'mongodb://mongodb-sharded:27017/fluentsearch-bff',
           username: DATABASE_USERNAME || 'root',
-          password: DATABASE_PASSWORD || 'FluentSearch.BFF.DB.Password',
+          password: DATABASE_PASSWORD || 'FluentSearch@BFF.MongoDB',
           authSource: DATABASE_AUTH_SOURCE || 'admin',
         },
         jwt: {
