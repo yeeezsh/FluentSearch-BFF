@@ -27,7 +27,7 @@ services:
       options:
         max-size: 50m
   fluentsearch-bff-mongos:
-    image: 'bitnami/mongodb-sharded:4.2'
+    image: 'bitnami/mongodb-sharded:4.4'
     restart: on-failure
     environment:
       MONGODB_ADVERTISED_HOSTNAME: fluentsearch-bff-mongos
@@ -40,7 +40,7 @@ services:
     ports:
       - '27017:27017'
   fluentsearch-bff-shard:
-    image: 'bitnami/mongodb-sharded:4.2'
+    image: 'bitnami/mongodb-sharded:4.4'
     restart: on-failure
     environment:
       MONGODB_ADVERTISED_HOSTNAME: fluentsearch-bff-shard
@@ -54,7 +54,7 @@ services:
     volumes:
       - './db/shard-0:/bitnami'
   fluentsearch-bff-cfg:
-    image: 'bitnami/mongodb-sharded:4.2'
+    image: 'bitnami/mongodb-sharded:4.4'
     restart: on-failure
     environment:
       MONGODB_ADVERTISED_HOSTNAME: fluentsearch-bff-cfg
