@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { AppModel } from 'src/app.resolver';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 
@@ -16,6 +17,7 @@ describe('AppResolver GraphQL', () => {
   });
 
   it('Query server status', () => {
+    const expectedReturns: AppModel = { status: 200 };
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
@@ -30,7 +32,7 @@ describe('AppResolver GraphQL', () => {
       .expect(res =>
         expect(res.body.data).toEqual({
           serverStatus: {
-            status: 200,
+            ...expectedReturns,
           },
         }),
       );
