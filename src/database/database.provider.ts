@@ -1,23 +1,25 @@
 import { Provider } from '@nestjs/common';
 import * as mongoose from 'mongoose';
+import { APP_CONFIG } from '../config/config.constant';
+import { ConfigurationInterface } from '../config/config.interface';
 import { DATABASE_CONNECTION } from './constants/database.constant';
 
 export const databaseProviders: Provider[] = [
   {
     provide: DATABASE_CONNECTION,
-    useFactory: async (): Promise<typeof mongoose> => {
-      return mongoose.connect(
-        'mongodb://mongodb-sharded:27017/fluent-search-bff',
-        {
-          user: 'root',
-          pass: 'fluent-search-bff-db',
-          authSource: 'admin',
-          useCreateIndex: true,
-          useNewUrlParser: true,
-          useFindAndModify: false,
-          useUnifiedTopology: true,
-        },
-      );
+    inject: [APP_CONFIG],
+    useFactory: async (
+      appConfig: ConfigurationInterface,
+    ): Promise<typeof mongoose> => {
+      return mongoose.connect(appConfig.database.connection, {
+        user: appConfig.database.username,
+        pass: appConfig.database.password,
+        authSource: appConfig.database.authSource,
+        useCreateIndex: true,
+        useNewUrlParser: true,
+        useFindAndModify: false,
+        useUnifiedTopology: true,
+      });
     },
   },
 ];
