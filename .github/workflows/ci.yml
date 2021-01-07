@@ -29,6 +29,6 @@ jobs:
       - name: Run Typescript Checks
         run: yarn lint
       - name: Run Tests
-        run: yarn test
+        run: yarn test:cov
       - name: Run E2E Tests
         run: yarn test:e2e
