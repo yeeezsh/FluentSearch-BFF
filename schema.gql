@@ -8,4 +8,41 @@ type AppModel {
 
 type Query {
   serverStatus: AppModel!
+  User(id: String): User
+  Users(limit: Int = 1000, skip: Int = 0): [User!]!
+}
+
+type User {
+  createDate: String!
+  deactivate: Boolean
+  email: [String!]!
+  mainEmail: String!
+  name: String
+  oauth: UserToken!
+  package: UserPackageEnum!
+  password: String!
+  role: UserRoleEnum!
+  updateDate: String!
+  zone: UserZoneEnum!
+}
+
+enum UserPackageEnum {
+  freeUser
+  paidUser
+}
+
+enum UserRoleEnum {
+  admin
+  staff
+  user
+}
+
+type UserToken {
+  provider: String!
+  token: String!
+}
+
+enum UserZoneEnum {
+  TH1
+  TH2
 }
