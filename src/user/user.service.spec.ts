@@ -6,7 +6,7 @@ import { ConfigModule } from '../config/config.module';
 import { DATABASE_CONNECTION } from '../database/constants/database.constant';
 import { DatabaseModule } from '../database/database.module';
 import { mockDatabaseFactory, replSet } from '../utils/mock-database.factory';
-import { CreateUserDto } from './dtos/user.dto';
+import { UserRegisterInput } from './dtos/inputs/user-register.input';
 import { userProivders } from './user.providers';
 import { UserService } from './user.service';
 
@@ -16,7 +16,7 @@ describe('UserService tests', () => {
   let module: TestingModule;
 
   const expectedEmailTest = 'test@mail.com';
-  const mockCreateUserDto: CreateUserDto = {
+  const mockCreateUserDto: UserRegisterInput = {
     mainEmail: expectedEmailTest,
     name: 'test name',
     password: '12345678',
