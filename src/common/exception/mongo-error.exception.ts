@@ -38,8 +38,7 @@ export class MongoErrorException {
       el => el.code === error.code,
     );
     if (mapError) {
-      const { code, type, error } = mapError;
-      throw error(msg);
+      throw mapError.error(msg);
     }
   }
 }
