@@ -8,7 +8,7 @@ type AppModel {
 
 type Mutation {
   CreateUser(UserRegisterInput: UserRegisterInput!): User!
-  UpdateUser(UserRegisterInput: UserRegisterInput!): User!
+  UpdateUser(UserUpdateInput: UserUpdateInput!): User!
 }
 
 type Query {
@@ -51,6 +51,13 @@ enum UserRoleEnum {
 type UserToken {
   provider: String!
   token: String!
+}
+
+input UserUpdateInput {
+  _id: String!
+  mainEmail: String!
+  name: String!
+  password: String!
 }
 
 enum UserZoneEnum {
