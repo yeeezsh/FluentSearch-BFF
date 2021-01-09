@@ -54,7 +54,7 @@ type UserToken {
 }
 
 input UserUpdateInput {
-  _id: String!
+  id: String!
   mainEmail: String!
   name: String!
   password: String!

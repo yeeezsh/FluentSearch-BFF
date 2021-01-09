@@ -90,7 +90,7 @@ export class UserService {
 
   async updateUser(payload: UserUpdateInput): Promise<UserDocument> {
     try {
-      const user = await this.userModel.findById(payload._id);
+      const user = await this.userModel.findById(payload.id);
       if (!user) throw new UserNotExistsException();
 
       return user;
