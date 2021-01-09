@@ -11,8 +11,8 @@ import {
 import { MongoHandlingEnum } from '../common/exception/@enums/mongo-handling.enum';
 import { DuplcatedEmailException } from '../common/exception/duplicated-email.exception';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
-import { UsersQuery } from './@types/user.query.types';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
+import { UsersQueryReturns } from './models/user-query-returns.model';
 import { UserTrimPipe } from './pipes/user.trim.pipe';
 import { UserService } from './user.service';
 
@@ -24,7 +24,7 @@ export class UserController {
   async getUsers(
     @Query('skip', ParseIntPipe) skip: number,
     @Query('limit', ParseIntPipe) limit: number,
-  ): Promise<UsersQuery> {
+  ): Promise<UsersQueryReturns> {
     return this.userService.getUsers(skip, limit);
   }
 

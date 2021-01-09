@@ -5,10 +5,13 @@ import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { UserNotExistsException } from '../common/exception/user-not-exists.exception';
 import { APP_CONFIG } from '../config/config.constant';
 import { ConfigurationInterface } from '../config/config.interface';
-import { UserQuery, UsersQuery } from './@types/user.query.types';
 import { USER_MODEL } from './constants/user.provider.constant';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
 import { UserUpdateInput } from './dtos/inputs/user-update.input';
+import {
+  UserQueryReturns,
+  UsersQueryReturns,
+} from './models/user-query-returns.model';
 import { User } from './models/user.model';
 import { UserPackageEnum } from './schemas/enums/user-package.enum';
 import { UserRoleEnum } from './schemas/enums/user-role.enum';
@@ -22,7 +25,7 @@ export class UserService {
     @Inject(APP_CONFIG) private readonly appConfig: ConfigurationInterface,
   ) {}
 
-  async findById(id: Types.ObjectId): Promise<UserQuery | null> {
+  async findById(id: Types.ObjectId): Promise<UserQueryReturns> {
     try {
       return this.userModel
         .findById(id)
@@ -34,7 +37,7 @@ export class UserService {
     }
   }
 
-  async getUsers(skip = 0, limit = 1000): Promise<UsersQuery> {
+  async getUsers(skip = 0, limit = 1000): Promise<UsersQueryReturns> {
     try {
       return this.userModel
         .find({})
@@ -48,7 +51,7 @@ export class UserService {
     }
   }
 
-  async getUser(id: string): Promise<UserQuery> {
+  async getUser(id: string): Promise<UserQueryReturns> {
     try {
       return this.userModel
         .findById(id)
