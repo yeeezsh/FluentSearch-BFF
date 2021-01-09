@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { SkipLimitArgs } from './dtos/args/skip-limit.args';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
+import { UserUpdateInput } from './dtos/inputs/user-update.input';
 import { User } from './models/user.model';
 import { UserService } from './user.service';
 
@@ -15,8 +16,17 @@ export class UserResolver {
     return this.userService.getUser(id);
   }
 
-  @Mutation(() => User, { name: 'User' })
-  async createUser(@Args('CreateUser') userRegisterInput: UserRegisterInput) {
+  @Mutation(() => User, { name: 'CreateUser' })
+  async createUser(
+    @Args('UserRegisterInput') userRegisterInput: UserRegisterInput,
+  ) {
+    return this.userService.createUser(userRegisterInput);
+  }
+
+  @Mutation(() => User, { name: 'UpdateUser' })
+  async updateUser(
+    @Args('UserUpdateInput') userRegisterInput: UserUpdateInput,
+  ) {
     return this.userService.createUser(userRegisterInput);
   }
 
