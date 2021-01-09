@@ -1,10 +1,10 @@
 // import { ValidationPipe } from "@nestjs/common";
 
 import { ArgumentMetadata } from '@nestjs/common';
-import { CreateUserDto } from '../dtos/user.dto';
+import { UserRegisterInput } from '../dtos/inputs/user-register.input';
 import { UserTrimPipe } from './user.trim.pipe';
 
-class CreateUserDtoTest implements CreateUserDto {
+class CreateUserDtoTest implements UserRegisterInput {
   mainEmail!: string;
   name!: string;
   password!: string;

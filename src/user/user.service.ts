@@ -6,7 +6,7 @@ import { APP_CONFIG } from '../config/config.constant';
 import { ConfigurationInterface } from '../config/config.interface';
 import { UserQuery, UsersQuery } from './@types/user.query.types';
 import { USER_MODEL } from './constants/user.provider.constant';
-import { CreateUserDto } from './dtos/user.dto';
+import { UserRegisterInput } from './dtos/inputs/user-register.input';
 import { User, UserDoc } from './models/user.model';
 import { UserPackageEnum } from './schemas/enums/user-package.enum';
 import { UserRoleEnum } from './schemas/enums/user-role.enum';
@@ -57,7 +57,7 @@ export class UserService {
     }
   }
 
-  async createUser(payload: CreateUserDto): Promise<UserDoc> {
+  async createUser(payload: UserRegisterInput): Promise<UserDoc> {
     const { round } = this.appConfig.bcrypt;
     const salt = await genSalt(round);
     const user: User = {
