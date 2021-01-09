@@ -84,4 +84,15 @@ export class UserService {
       throw new MongoErrorException(err);
     }
   }
+
+  async updateUser(payload: UserUpdateInput): Promise<UserDoc> {
+    try {
+      const user = await this.userModel.findById(payload._id);
+      if (!user) throw new UserNotExistsException();
+
+      return {} as UserDoc;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
