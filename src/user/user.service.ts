@@ -92,13 +92,12 @@ export class UserService {
   }
 
   async updateUser(payload: UserUpdateInput): Promise<UserDocument> {
-    try {
-      const user = await this.userModel.findById(payload.id);
-      if (!user) throw new UserNotExistsException();
+    const updatePayload = { ...payload, _id: null };
+    const user = await this.userModel.findByIdAndUpdate(payload.id, {
+      parsePayload: updatePayload,
+    });
+    if (!user) throw new UserNotExistsException();
 
-      return user;
-    } catch (err) {
-      throw err;
-    }
+    return user;
   }
 }
