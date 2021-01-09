@@ -7,7 +7,7 @@ import { ConfigurationInterface } from '../config/config.interface';
 import { UserQuery, UsersQuery } from './@types/user.query.types';
 import { USER_MODEL } from './constants/user.provider.constant';
 import { CreateUserDto } from './dtos/user.dto';
-import { User, UserDoc } from './interfaces/user.interface';
+import { User, UserDoc } from './models/user.model';
 import { UserPackageEnum } from './schemas/enums/user-package.enum';
 import { UserRoleEnum } from './schemas/enums/user-role.enum';
 import { UserZoneEnum } from './schemas/enums/user.zone.enum';
@@ -45,12 +45,11 @@ export class UserService {
     }
   }
 
-  async getUser(id: string): Promise<Omit<User, 'password'>> {
+  async getUser(id: string): Promise<UserQuery> {
     try {
       return this.userModel
         .find({ _id: id })
         .select({ password: 0 })
-
         .lean();
     } catch (err) {
       Logger.error(err);

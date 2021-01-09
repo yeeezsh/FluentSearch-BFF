@@ -1,4 +1,4 @@
-import { User } from '../interfaces/user.interface';
+import { User } from '../models/user.model';
 
 export type UserQuery = Omit<User, 'password'>;
 export type UsersQuery = Array<Omit<User, 'password'>>;

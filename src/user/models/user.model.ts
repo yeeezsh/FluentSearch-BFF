@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Document } from 'mongoose';
 import { UserPackageEnum } from '../schemas/enums/user-package.enum';
 import { UserRoleEnum } from '../schemas/enums/user-role.enum';
 import { UserZoneEnum } from '../schemas/enums/user.zone.enum';
@@ -48,3 +49,5 @@ export class User {
   @Field(type => String)
   updateDate!: Date;
 }
+
+export class UserDoc extends Document {}
