@@ -12,6 +12,7 @@
     "incremental": true,
     "lib": ["ES2017", "ES2018", "ES2019"],
     "strictNullChecks": true,
-    "strict": true
+    "strict": true,
+    "esModuleInterop": true
   }
 }
