@@ -45,6 +45,19 @@ export class UserService {
     }
   }
 
+  async getUser(id: string): Promise<Omit<User, 'password'>> {
+    try {
+      return this.userModel
+        .find({ _id: id })
+        .select({ password: 0 })
+
+        .lean();
+    } catch (err) {
+      Logger.error(err);
+      throw new MongoErrorException(err);
+    }
+  }
+
   async createUser(payload: CreateUserDto): Promise<UserDoc> {
     const { round } = this.appConfig.bcrypt;
     const salt = await genSalt(round);
