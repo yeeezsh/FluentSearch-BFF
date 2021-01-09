@@ -87,7 +87,7 @@ export class UserService {
       return saved;
     } catch (err) {
       Logger.error(err);
-      throw new MongoErrorException(err);
+      throw new MongoErrorException(err, 'Email is duplicated');
     }
   }
 
