@@ -2,20 +2,23 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { genSalt, hash } from 'bcryptjs';
 import { Model, Types } from 'mongoose';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
+import { UserNotExistsException } from '../common/exception/user-not-exists.exception';
 import { APP_CONFIG } from '../config/config.constant';
 import { ConfigurationInterface } from '../config/config.interface';
 import { UserQuery, UsersQuery } from './@types/user.query.types';
 import { USER_MODEL } from './constants/user.provider.constant';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
-import { User, UserDoc } from './models/user.model';
+import { UserUpdateInput } from './dtos/inputs/user-update.input';
+import { User } from './models/user.model';
 import { UserPackageEnum } from './schemas/enums/user-package.enum';
 import { UserRoleEnum } from './schemas/enums/user-role.enum';
 import { UserZoneEnum } from './schemas/enums/user.zone.enum';
+import { UserDocument } from './schemas/user.schema';
 
 @Injectable()
 export class UserService {
   constructor(
-    @Inject(USER_MODEL) private readonly userModel: Model<UserDoc>,
+    @Inject(USER_MODEL) private readonly userModel: Model<UserDocument>,
     @Inject(APP_CONFIG) private readonly appConfig: ConfigurationInterface,
   ) {}
 
@@ -48,7 +51,7 @@ export class UserService {
   async getUser(id: string): Promise<UserQuery> {
     try {
       return this.userModel
-        .find({ _id: id })
+        .findById(id)
         .select({ password: 0 })
         .lean();
     } catch (err) {
@@ -57,7 +60,7 @@ export class UserService {
     }
   }
 
-  async createUser(payload: UserRegisterInput): Promise<UserDoc> {
+  async createUser(payload: UserRegisterInput): Promise<UserDocument> {
     const { round } = this.appConfig.bcrypt;
     const salt = await genSalt(round);
     const user: User = {
@@ -85,12 +88,12 @@ export class UserService {
     }
   }
 
-  async updateUser(payload: UserUpdateInput): Promise<UserDoc> {
+  async updateUser(payload: UserUpdateInput): Promise<UserDocument> {
     try {
       const user = await this.userModel.findById(payload._id);
       if (!user) throw new UserNotExistsException();
 
-      return {} as UserDoc;
+      return user;
     } catch (err) {
       throw err;
     }
