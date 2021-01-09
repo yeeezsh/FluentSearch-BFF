@@ -12,7 +12,7 @@ import { MongoHandlingEnum } from '../common/exception/@enums/mongo-handling.enu
 import { DuplcatedEmailException } from '../common/exception/duplicated-email.exception';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { UsersQuery } from './@types/user.query.types';
-import { CreateUserDto } from './dtos/user.dto';
+import { UserRegisterInput } from './dtos/inputs/user-register.input';
 import { UserTrimPipe } from './pipes/user.trim.pipe';
 import { UserService } from './user.service';
 
@@ -30,7 +30,7 @@ export class UserController {
 
   @Post('/register')
   @UsePipes(new UserTrimPipe())
-  async createUser(@Body() body: CreateUserDto): Promise<void> {
+  async createUser(@Body() body: UserRegisterInput): Promise<void> {
     try {
       await this.userService.createUser(body);
       return;
