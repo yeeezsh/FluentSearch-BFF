@@ -30,6 +30,6 @@ const userSchema = new Schema({
   updateDate: { type: Date, default: Date.now, required: true },
 });
 
-export type UserDocument = Document<User>;
+export interface UserDocument extends Document, User {}
 
 export default userSchema;
