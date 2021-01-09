@@ -1,7 +1,7 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import * as mongoose from 'mongoose';
-import * as request from 'supertest';
+import mongoose from 'mongoose';
+import request from 'supertest';
 import { DATABASE_CONNECTION } from '../src/database/constants/database.constant';
 import { UsersQuery } from '../src/user/@types/user.query.types';
 import { CreateUserDto } from '../src/user/dtos/user.dto';

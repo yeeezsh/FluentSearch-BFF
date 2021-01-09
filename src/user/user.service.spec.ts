@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import * as mongoose from 'mongoose';
-import { Types } from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { mockIndexDuplicatedErrorMsg } from '../common/exception/mongo-error.exception.spec';
 import { ConfigModule } from '../config/config.module';
