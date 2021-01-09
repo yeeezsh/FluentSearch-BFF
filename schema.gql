@@ -6,6 +6,10 @@ type AppModel {
   status: Int!
 }
 
+type Mutation {
+  User(CreateUser: UserRegisterInput!): User!
+}
+
 type Query {
   serverStatus: AppModel!
   User(id: String): User
@@ -29,6 +33,12 @@ type User {
 enum UserPackageEnum {
   freeUser
   paidUser
+}
+
+input UserRegisterInput {
+  mainEmail: String!
+  name: String!
+  password: String!
 }
 
 enum UserRoleEnum {
