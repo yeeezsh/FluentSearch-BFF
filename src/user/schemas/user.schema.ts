@@ -1,4 +1,5 @@
-import { Schema } from 'mongoose';
+import { Document, Schema } from 'mongoose';
+import { User } from '../models/user.model';
 import {
   userPackageConstant,
   UserPackageEnum,
@@ -28,5 +29,7 @@ const userSchema = new Schema({
   createDate: { type: Date, default: Date.now, required: true },
   updateDate: { type: Date, default: Date.now, required: true },
 });
+
+export type UserDocument = Document<User>;
 
 export default userSchema;
