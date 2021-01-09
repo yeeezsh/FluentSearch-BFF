@@ -9,6 +9,7 @@ import { UserService } from './user.service';
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
+  // user
   @Query(() => User, { name: 'User', nullable: true })
   async getUser(
     @Args('id', { type: () => String, nullable: true }) id: string,
@@ -30,6 +31,7 @@ export class UserResolver {
     return this.userService.createUser(userRegisterInput);
   }
 
+  // users
   @Query(() => [User], { name: 'Users' })
   async getUsers(@Args() skipLimit: SkipLimitArgs) {
     const { skip, limit } = skipLimit;
