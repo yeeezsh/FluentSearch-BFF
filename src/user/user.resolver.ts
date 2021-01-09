@@ -1,5 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { SkipLimitArgs } from './dtos/skip-limit.args';
+import { SkipLimitArgs } from './dtos/args/skip-limit.args';
 import { User } from './models/user.model';
 import { UserService } from './user.service';
 
