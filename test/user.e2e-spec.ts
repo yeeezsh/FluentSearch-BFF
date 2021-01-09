@@ -3,15 +3,15 @@ import { Test, TestingModule } from '@nestjs/testing';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { DATABASE_CONNECTION } from '../src/database/constants/database.constant';
-import { UsersQuery } from '../src/user/@types/user.query.types';
-import { CreateUserDto } from '../src/user/dtos/user.dto';
+import { UserRegisterInput } from '../src/user/dtos/inputs/user-register.input';
+import { UsersQueryReturns } from '../src/user/models/user-query-returns.model';
 import { UserModule } from '../src/user/user.module';
 import {
   mockDatabaseFactory,
   replSet,
 } from '../src/utils/mock-database.factory';
 
-const user1CreatePayload: CreateUserDto = {
+const user1CreatePayload: UserRegisterInput = {
   mainEmail: 'test@test.com',
   name: 'username',
   password: '123456',
@@ -56,7 +56,7 @@ describe('UserController (e2e)', () => {
   });
 
   it('/user (POST) bad data payload should be throw', async () => {
-    const badUserCreatePayload: CreateUserDto = {
+    const badUserCreatePayload: UserRegisterInput = {
       mainEmail: 'test.com', // bad email
       name: 'A',
       password: '123', // bad password
@@ -71,14 +71,14 @@ describe('UserController (e2e)', () => {
     return request(app.getHttpServer()).get(
       '/user/lists?skip=0&limit=10',
       req => {
-        const data = (req.body as unknown) as Array<UsersQuery>;
+        const data = (req.body as unknown) as Array<UsersQueryReturns>;
         expect(data.length).toBe(1);
       },
     );
   });
 
   it('/lists (GET) should have 2 user & skip and limit is working correctly', async () => {
-    const user2CreatePayload: CreateUserDto = {
+    const user2CreatePayload: UserRegisterInput = {
       mainEmail: 'test2@test.com',
       name: 'test user2',
       password: '123456',
@@ -91,8 +91,7 @@ describe('UserController (e2e)', () => {
         request(app.getHttpServer()).get(
           '/user/lists?skip=0&limit=10', // get all
           req => {
-            const data = (req.body as unknown) as UsersQuery;
-            console.log(data);
+            const data = (req.body as unknown) as UsersQueryReturns;
             expect(data.length).toBe(2);
           },
         ),
