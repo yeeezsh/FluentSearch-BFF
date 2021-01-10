@@ -10,6 +10,4 @@ FROM node:14.15.3-alpine3.10 AS prod
 COPY yarn.lock yarn.lock
 COPY package.json package.json
 ADD . .
-CMD ["yarn", "install"]
-CMD ["yarn", "build"]
-CMD [ "yarn", "start:prod" ]
+CMD [ "./start.sh" ]
