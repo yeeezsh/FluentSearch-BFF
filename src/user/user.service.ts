@@ -81,14 +81,9 @@ export class UserService {
       updateDate: new Date(),
     };
 
-    try {
-      const doc = new this.userModel(user);
-      const saved = await doc.save();
-      return saved;
-    } catch (err) {
-      Logger.error(err);
-      throw new MongoErrorException(err, 'Email is duplicated');
-    }
+    const doc = new this.userModel(user);
+    const saved = await doc.save();
+    return saved;
   }
 
   async updateUser(payload: UserUpdateInput): Promise<UserDocument> {
