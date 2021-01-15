@@ -1,7 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import mongoose, { Types } from 'mongoose';
-import { MongoErrorException } from '../common/exception/mongo-error.exception';
-import { mockIndexDuplicatedErrorMsg } from '../common/exception/mongo-error.exception.spec';
 import { ConfigModule } from '../config/config.module';
 import { DATABASE_CONNECTION } from '../database/constants/database.constant';
 import { DatabaseModule } from '../database/database.module';
@@ -71,15 +69,5 @@ describe('UserService tests', () => {
     const userDoc = await service.findById(doc._id);
 
     expect(userDoc?.mainEmail).toEqual(expectedEmailTest2);
-  });
-
-  it('Should throw an error IndexDuplicatedError when email is duplicated', async () => {
-    const mockErrorInstance = new MongoErrorException(
-      mockIndexDuplicatedErrorMsg,
-    );
-
-    await expect(service.createUser(mockCreateUserDto)).rejects.toEqual(
-      mockErrorInstance,
-    );
   });
 });

@@ -2,15 +2,13 @@ import {
   Body,
   Controller,
   Get,
-  InternalServerErrorException,
   ParseIntPipe,
   Post,
   Query,
+  UseFilters,
   UsePipes,
 } from '@nestjs/common';
-import { MongoHandlingEnum } from '../common/exception/@enums/mongo-handling.enum';
-import { DuplcatedEmailException } from '../common/exception/duplicated-email.exception';
-import { MongoErrorException } from '../common/exception/mongo-error.exception';
+import { UserExceptionFilters } from '../common/filters/user-error.filter';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
 import { UsersQueryReturns } from './models/user-query-returns.model';
 import { UserTrimPipe } from './pipes/user.trim.pipe';
@@ -30,17 +28,8 @@ export class UserController {
 
   @Post('/register')
   @UsePipes(new UserTrimPipe())
+  @UseFilters(UserExceptionFilters)
   async createUser(@Body() body: UserRegisterInput): Promise<void> {
-    try {
-      await this.userService.createUser(body);
-      return;
-    } catch (error) {
-      const catchErr = (error as unknown) as MongoErrorException;
-
-      if (catchErr.type == MongoHandlingEnum.IndexDuplicated)
-        throw new DuplcatedEmailException();
-
-      throw new InternalServerErrorException();
-    }
+    await this.userService.createUser(body);
   }
 }

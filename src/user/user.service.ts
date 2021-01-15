@@ -1,7 +1,6 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { genSalt, hash } from 'bcryptjs';
 import { Model, Types } from 'mongoose';
-import { MongoErrorException } from '../common/exception/mongo-error.exception';
 import { UserNotExistsException } from '../common/exception/user-not-exists.exception';
 import { APP_CONFIG } from '../config/config.constant';
 import { ConfigurationInterface } from '../config/config.interface';
@@ -26,41 +25,26 @@ export class UserService {
   ) {}
 
   async findById(id: Types.ObjectId): Promise<UserQueryReturns> {
-    try {
-      return this.userModel
-        .findById(id)
-        .select({ password: 0 })
-        .lean();
-    } catch (err) {
-      Logger.error(err);
-      throw new MongoErrorException(err);
-    }
+    return this.userModel
+      .findById(id)
+      .select({ password: 0 })
+      .lean();
   }
 
   async getUsers(skip = 0, limit = 1000): Promise<UsersQueryReturns> {
-    try {
-      return this.userModel
-        .find({})
-        .select({ password: 0 })
-        .skip(skip)
-        .limit(limit)
-        .lean();
-    } catch (err) {
-      Logger.error(err);
-      throw new MongoErrorException(err);
-    }
+    return this.userModel
+      .find({})
+      .select({ password: 0 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
   }
 
   async getUser(id: string): Promise<UserQueryReturns> {
-    try {
-      return this.userModel
-        .findById(id)
-        .select({ password: 0 })
-        .lean();
-    } catch (err) {
-      Logger.error(err);
-      throw new MongoErrorException(err);
-    }
+    return this.userModel
+      .findById(id)
+      .select({ password: 0 })
+      .lean();
   }
 
   async createUser(payload: UserRegisterInput): Promise<UserDocument> {
