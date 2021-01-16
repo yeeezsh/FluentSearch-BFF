@@ -34,20 +34,18 @@ describe('UserResolver GraphQL', () => {
   it('CreateUser Mutation should able to create user', () => {
     const userInput = `
     mutation {
-        CreateUser(
-            UserRegisterInput: 
-            { 
-                mainEmail: "test3@test.com", 
-                name: "euei99", 
-                password: "123456"
-            }
-                ) 
-            {
-                _id
-                mainEmail
-                name
-    }
-  }
+      CreateUser(
+        UserRegisterInput: {
+          mainEmail: "test3@test.com"
+          name: "euei99"
+          password: "123456"
+        }
+      ) {
+        _id
+        mainEmail
+        name
+      }
+    }    
   `;
     return request(app.getHttpServer())
       .post('/graphql')
@@ -95,35 +93,31 @@ describe('UserResolver GraphQL', () => {
   it('CreateUser Mutation should able to validate/ preventing duplicated email', () => {
     const duplicatedUserInput = `
     mutation {
-        CreateUser(
-            UserRegisterInput: 
-            { 
-                mainEmail: "test5@test.com", 
-                name: "euei99", 
-                password: "123456"
-            }
-                ) 
-            {
-                mainEmail
-                name
-    }
-  }
+      CreateUser(
+        UserRegisterInput: {
+          mainEmail: "test5@test.com"
+          name: "euei99"
+          password: "123456"
+        }
+      ) {
+        mainEmail
+        name
+      }
+    }    
   `;
     const badUserInput = `
     mutation {
-        CreateUser(
-            UserRegisterInput: 
-            { 
-                mainEmail: "test.com", 
-                name: "euei99", 
-                password: "12345"
-            }
-                ) 
-            {
-                mainEmail
-                name
-    }
-  }
+      CreateUser(
+        UserRegisterInput: {
+          mainEmail: "test.com"
+          name: "euei99"
+          password: "12345"
+        }
+      ) {
+        mainEmail
+        name
+      }
+    }    
   `;
     return request(app.getHttpServer())
       .post('/graphql')
