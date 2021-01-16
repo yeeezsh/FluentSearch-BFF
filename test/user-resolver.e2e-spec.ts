@@ -53,7 +53,6 @@ describe('UserResolver GraphQL', () => {
         query: userInput,
       })
       .expect(res => {
-        console.log(res.body.data);
         const data = res.body.data;
         expect(data.CreateUser).toEqual({
           mainEmail: 'test3@test.com',
