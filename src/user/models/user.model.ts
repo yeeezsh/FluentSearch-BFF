@@ -51,3 +51,9 @@ export class User {
 }
 
 export class UserDoc extends Document {}
+
+@ObjectType()
+export class UserWithId extends User {
+  @Field(() => String)
+  _id: Date;
+}
