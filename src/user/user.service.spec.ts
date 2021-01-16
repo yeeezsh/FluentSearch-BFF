@@ -13,6 +13,7 @@ import { UserService } from './user.service';
 
 describe('UserService tests', () => {
   let service: UserService;
+  let database: Promise<typeof mongoose>;
   let id: Types.ObjectId;
   let module: TestingModule;
 
@@ -35,13 +36,15 @@ describe('UserService tests', () => {
       .compile();
 
     service = module.get<UserService>(UserService);
+    database = module.get<Promise<typeof mongoose>>(DATABASE_CONNECTION);
+
     const user = await service.createUser(mockCreateUserDto);
     id = user._id;
   });
 
   afterAll(async () => {
     await module.close();
-    await mongoose.disconnect();
+    (await database).connection.close();
     await replSet.stop();
   });
 
