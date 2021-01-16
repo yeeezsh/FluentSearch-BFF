@@ -4,7 +4,7 @@ import { UserExceptionFilters } from '../common/filters/user-error.filter';
 import { SkipLimitArgs } from './dtos/args/skip-limit.args';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
 import { UserUpdateInput } from './dtos/inputs/user-update.input';
-import { User } from './models/user.model';
+import { User, UserWithId } from './models/user.model';
 import { UserService } from './user.service';
 
 @Resolver(() => User)
@@ -12,7 +12,7 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   // user
-  @Query(() => User, { name: 'User', nullable: true })
+  @Query(() => UserWithId, { name: 'User', nullable: true })
   async getUser(
     @Args('id', { type: () => String, nullable: true }) id: string,
   ) {
@@ -20,14 +20,14 @@ export class UserResolver {
   }
 
   @UseFilters(UserExceptionFilters)
-  @Mutation(() => User, { name: 'CreateUser' })
+  @Mutation(() => UserWithId, { name: 'CreateUser' })
   async createUser(
     @Args('UserRegisterInput') userRegisterInput: UserRegisterInput,
   ) {
     return this.userService.createUser(userRegisterInput);
   }
 
-  @Mutation(() => User, { name: 'UpdateUser' })
+  @Mutation(() => UserWithId, { name: 'UpdateUser' })
   async updateUser(
     @Args('UserUpdateInput') userRegisterInput: UserUpdateInput,
   ) {
@@ -35,7 +35,7 @@ export class UserResolver {
   }
 
   // users
-  @Query(() => [User], { name: 'Users' })
+  @Query(() => [UserWithId], { name: 'Users' })
   async getUsers(@Args() skipLimit: SkipLimitArgs) {
     const { skip, limit } = skipLimit;
     return this.userService.getUsers(skip, limit);
