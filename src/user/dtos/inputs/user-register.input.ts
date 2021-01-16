@@ -7,15 +7,15 @@ export class UserRegisterInput
   implements Pick<User, 'mainEmail' | 'password' | 'name'> {
   @Field()
   @IsEmail()
-  mainEmail!: string;
+  mainEmail: string;
 
   @Field()
   @MinLength(6)
   @MaxLength(48)
-  password!: string;
+  password: string;
 
   @Field()
   @MinLength(1)
   @MaxLength(48)
-  name!: string;
+  name: string;
 }
