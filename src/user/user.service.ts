@@ -71,12 +71,15 @@ export class UserService {
   }
 
   async updateUser(payload: UserUpdateInput): Promise<UserDocument> {
-    const updatePayload = { ...payload, _id: null };
-    const user = await this.userModel.findByIdAndUpdate(payload.id, {
-      parsePayload: updatePayload,
-    });
+    const updatePayload = { ...payload, id: undefined, password: undefined };
+    const user = await this.userModel.findByIdAndUpdate(
+      payload.id,
+      updatePayload,
+      {
+        new: true,
+      },
+    );
     if (!user) throw new UserNotExistsException();
-
     return user;
   }
 }
