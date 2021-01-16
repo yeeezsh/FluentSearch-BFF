@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Document } from 'mongoose';
+import { IUser } from '../interfaces/user';
 import { UserPackageEnum } from '../schemas/enums/user-package.enum';
 import { UserRoleEnum } from '../schemas/enums/user-role.enum';
 import { UserZoneEnum } from '../schemas/enums/user.zone.enum';
@@ -12,7 +13,7 @@ registerEnumType(UserPackageEnum, { name: 'UserPackageEnum' });
 registerEnumType(UserZoneEnum, { name: 'UserZoneEnum' });
 
 @ObjectType()
-export class User {
+export class User implements IUser {
   @Field(() => String)
   mainEmail: string;
 
