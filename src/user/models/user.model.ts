@@ -13,41 +13,41 @@ registerEnumType(UserZoneEnum, { name: 'UserZoneEnum' });
 
 @ObjectType()
 export class User {
-  @Field(type => String)
-  mainEmail!: string;
+  @Field(() => String)
+  mainEmail: string;
 
-  @Field(type => [String])
-  email!: string[];
+  @Field(() => [String])
+  email: string[];
 
-  @Field(type => String)
-  password!: string;
+  @Field(() => String)
+  password: string;
 
-  @Field(type => UserToken)
-  oauth!: UserToken[] | [];
+  @Field(() => UserToken)
+  oauth: UserToken[] | [];
 
-  @Field(type => String, { nullable: true })
-  name!: string;
+  @Field(() => String, { nullable: true })
+  name: string;
 
   // logic
-  @Field(type => UserRoleEnum)
-  role!: UserRoleEnum;
+  @Field(() => UserRoleEnum)
+  role: UserRoleEnum;
 
-  @Field(type => UserPackageEnum)
-  package!: UserPackageEnum;
+  @Field(() => UserPackageEnum)
+  package: UserPackageEnum;
 
   //   meta
-  @Field(type => UserZoneEnum)
-  zone!: UserZoneEnum;
+  @Field(() => UserZoneEnum)
+  zone: UserZoneEnum;
 
-  @Field(type => Boolean, { nullable: true })
+  @Field(() => Boolean, { nullable: true })
   deactivate?: boolean;
 
   //TODO: need Date as a scalar type
-  @Field(type => String)
-  createDate!: Date;
+  @Field(() => String)
+  createDate: Date;
 
-  @Field(type => String)
-  updateDate!: Date;
+  @Field(() => String)
+  updateDate: Date;
 }
 
 export class UserDoc extends Document {}
