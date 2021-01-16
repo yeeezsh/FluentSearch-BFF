@@ -105,9 +105,7 @@ describe('UserResolver GraphQL', () => {
       })
       .expect(res => {
         const errors = res.body.errors;
-        expect(errors[0].message).toEqual(
-          'Index duplicated : Email is duplicated',
-        );
+        expect(errors[0].message).toEqual('Duplicated email');
       })
       .then(() =>
         request(app.getHttpServer())
