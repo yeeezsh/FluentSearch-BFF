@@ -8,6 +8,7 @@ import { mongodbMockFactory, replSet } from './mock/mongodb.mock.factory';
 
 describe('UserResolver GraphQL', () => {
   let app: INestApplication;
+  let userId: string;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -42,6 +43,7 @@ describe('UserResolver GraphQL', () => {
             }
                 ) 
             {
+                _id
                 mainEmail
                 name
     }
@@ -53,10 +55,39 @@ describe('UserResolver GraphQL', () => {
         query: userInput,
       })
       .expect(res => {
-        const data = res.body.data;
-        expect(data.CreateUser).toEqual({
+        const user = res.body.data.CreateUser;
+        userId = user._id;
+        expect(user).toEqual({
           mainEmail: 'test3@test.com',
           name: 'euei99',
+          _id: userId,
+        });
+      });
+  });
+
+  it('UpdateUser Mutation should able to update user', () => {
+    const userUpdateInput = `
+    mutation {
+      UpdateUser(UserUpdateInput: {
+        id: "${userId}",
+        mainEmail: "test5@test.com",
+        name: "euei999"
+      }) {
+        mainEmail
+        name
+      }
+    }
+  `;
+    return request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: userUpdateInput,
+      })
+      .expect(res => {
+        const data = res.body.data;
+        expect(data.UpdateUser).toEqual({
+          mainEmail: 'test5@test.com',
+          name: 'euei999',
         });
       });
   });
@@ -67,7 +98,7 @@ describe('UserResolver GraphQL', () => {
         CreateUser(
             UserRegisterInput: 
             { 
-                mainEmail: "test3@test.com", 
+                mainEmail: "test5@test.com", 
                 name: "euei99", 
                 password: "123456"
             }
