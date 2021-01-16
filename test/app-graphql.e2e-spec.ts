@@ -5,10 +5,7 @@ import request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { AppModel } from '../src/app.resolver';
 import { DATABASE_CONNECTION } from '../src/database/constants/database.constant';
-import {
-  mockDatabaseFactory,
-  replSet,
-} from '../src/utils/mock-database.factory';
+import { mongodbMockFactory, replSet } from './mock/mongodb.mock.factory';
 describe('AppResolver GraphQL', () => {
   let app: INestApplication;
 
@@ -18,7 +15,7 @@ describe('AppResolver GraphQL', () => {
     })
       .overrideProvider(DATABASE_CONNECTION)
       .useFactory({
-        factory: async () => await mockDatabaseFactory(),
+        factory: async () => await mongodbMockFactory(),
       })
       .compile();
 

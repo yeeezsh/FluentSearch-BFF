@@ -1,9 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import mongoose, { Types } from 'mongoose';
+import {
+  mongodbMockFactory,
+  replSet,
+} from '../../test/mock/mongodb.mock.factory';
 import { ConfigModule } from '../config/config.module';
 import { DATABASE_CONNECTION } from '../database/constants/database.constant';
 import { DatabaseModule } from '../database/database.module';
-import { mockDatabaseFactory, replSet } from '../utils/mock-database.factory';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
 import { userProivders } from './user.providers';
 import { UserService } from './user.service';
@@ -27,7 +30,7 @@ describe('UserService tests', () => {
     })
       .overrideProvider(DATABASE_CONNECTION)
       .useFactory({
-        factory: async () => mockDatabaseFactory(),
+        factory: async () => mongodbMockFactory(),
       })
       .compile();
 

@@ -3,11 +3,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { DATABASE_CONNECTION } from '../src/database/constants/database.constant';
-import {
-  mockDatabaseFactory,
-  replSet,
-} from '../src/utils/mock-database.factory';
 import { AppModule } from './../src/app.module';
+import { mongodbMockFactory, replSet } from './mock/mongodb.mock.factory';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -18,7 +15,7 @@ describe('AppController (e2e)', () => {
     })
       .overrideProvider(DATABASE_CONNECTION)
       .useFactory({
-        factory: async () => await mockDatabaseFactory(),
+        factory: async () => await mongodbMockFactory(),
       })
       .compile();
 

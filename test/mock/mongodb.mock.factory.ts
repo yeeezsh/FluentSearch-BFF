@@ -6,7 +6,7 @@ export const replSet = new MongoMemoryReplSet({
   replSet: { storageEngine: 'wiredTiger' },
 });
 
-export const mockDatabaseFactory = async (): Promise<typeof mongoose> => {
+export const mongodbMockFactory = async (): Promise<typeof mongoose> => {
   await replSet.waitUntilRunning();
   const uri = await replSet.getUri();
   const onJest = process.env.JEST_WORKER_ID !== undefined;
