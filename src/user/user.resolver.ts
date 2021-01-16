@@ -31,7 +31,7 @@ export class UserResolver {
   async updateUser(
     @Args('UserUpdateInput') userRegisterInput: UserUpdateInput,
   ) {
-    return this.userService.createUser(userRegisterInput);
+    return this.userService.updateUser(userRegisterInput);
   }
 
   // users
