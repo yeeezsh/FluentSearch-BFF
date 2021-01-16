@@ -7,28 +7,14 @@ type AppModel {
 }
 
 type Mutation {
-  CreateUser(UserRegisterInput: UserRegisterInput!): User!
-  UpdateUser(UserUpdateInput: UserUpdateInput!): User!
+  CreateUser(UserRegisterInput: UserRegisterInput!): UserWithId!
+  UpdateUser(UserUpdateInput: UserUpdateInput!): UserWithId!
 }
 
 type Query {
   serverStatus: AppModel!
-  User(id: String): User
-  Users(limit: Int = 1000, skip: Int = 0): [User!]!
-}
-
-type User {
-  createDate: String!
-  deactivate: Boolean
-  email: [String!]!
-  mainEmail: String!
-  name: String
-  oauth: UserToken!
-  package: UserPackageEnum!
-  password: String!
-  role: UserRoleEnum!
-  updateDate: String!
-  zone: UserZoneEnum!
+  User(id: String): UserWithId
+  Users(limit: Int = 1000, skip: Int = 0): [UserWithId!]!
 }
 
 enum UserPackageEnum {
@@ -58,6 +44,21 @@ input UserUpdateInput {
   mainEmail: String!
   name: String!
   password: String!
+}
+
+type UserWithId {
+  _id: String!
+  createDate: String!
+  deactivate: Boolean
+  email: [String!]!
+  mainEmail: String!
+  name: String
+  oauth: UserToken!
+  package: UserPackageEnum!
+  password: String!
+  role: UserRoleEnum!
+  updateDate: String!
+  zone: UserZoneEnum!
 }
 
 enum UserZoneEnum {
