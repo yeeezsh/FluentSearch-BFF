@@ -31,7 +31,7 @@ describe('UserService tests', () => {
     })
       .overrideProvider(DATABASE_CONNECTION)
       .useFactory({
-        factory: async () => mongodbMockFactory(),
+        factory: async () => await mongodbMockFactory(),
       })
       .compile();
 
