@@ -1,5 +1,6 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { gql } from 'apollo-server-express';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { AppModule } from '../src/app.module';
@@ -31,22 +32,23 @@ describe('UserResolver GraphQL', () => {
   });
 
   it('CreateUser Mutation should able to create user', () => {
-    const userInput = `
-    mutation {
-        CreateUser(
-            UserRegisterInput: 
-            { 
-                mainEmail: "test3@test.com", 
-                name: "euei99", 
-                password: "123456"
+    const userInput = gql`
+      {
+        mutation {
+          CreateUser(
+            UserRegisterInput: {
+              mainEmail: "test3@test.com"
+              name: "euei99"
+              password: "123456"
             }
-                ) 
-            {
-                mainEmail
-                name
-    }
-  }
-  `;
+          ) {
+            mainEmail
+            name
+          }
+        }
+      }
+    `;
+
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
@@ -63,38 +65,35 @@ describe('UserResolver GraphQL', () => {
   });
 
   it('CreateUser Mutation should able to validate/ preventing duplicated email', () => {
-    const duplicatedUserInput = `
-    mutation {
+    const duplicatedUserInput = gql`
+      mutation {
         CreateUser(
-            UserRegisterInput: 
-            { 
-                mainEmail: "test3@test.com", 
-                name: "euei99", 
-                password: "123456"
-            }
-                ) 
-            {
-                mainEmail
-                name
-    }
-  }
-  `;
-    const badUserInput = `
-    mutation {
+          UserRegisterInput: {
+            mainEmail: "test3@test.com"
+            name: "euei99"
+            password: "123456"
+          }
+        ) {
+          mainEmail
+          name
+        }
+      }
+    `;
+    const badUserInput = gql`
+      mutation {
         CreateUser(
-            UserRegisterInput: 
-            { 
-                mainEmail: "test.com", 
-                name: "euei99", 
-                password: "12345"
-            }
-                ) 
-            {
-                mainEmail
-                name
-    }
-  }
-  `;
+          UserRegisterInput: {
+            mainEmail: "test.com"
+            name: "euei99"
+            password: "12345"
+          }
+        ) {
+          mainEmail
+          name
+        }
+      }
+    `;
+
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
