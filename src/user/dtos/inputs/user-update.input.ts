@@ -3,7 +3,7 @@ import { IsEmail, IsOptional, MaxLength, MinLength } from 'class-validator';
 import { UserRegisterInput } from './user-register.input';
 
 @InputType()
-export class UserUpdateInput implements UserRegisterInput {
+export class UserUpdateInput implements Omit<UserRegisterInput, 'password'> {
   @Field()
   id: string;
 
@@ -11,12 +11,6 @@ export class UserUpdateInput implements UserRegisterInput {
   @IsEmail()
   @IsOptional()
   mainEmail: string;
-
-  @Field({ nullable: true })
-  @MinLength(6)
-  @MaxLength(48)
-  @IsOptional()
-  password: string;
 
   @Field({ nullable: true })
   @MinLength(1)

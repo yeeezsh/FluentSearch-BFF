@@ -43,7 +43,6 @@ input UserUpdateInput {
   id: String!
   mainEmail: String
   name: String
-  password: String
 }
 
 type UserWithId {
