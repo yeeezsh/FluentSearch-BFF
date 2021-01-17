@@ -7,5 +7,6 @@ export enum ConfigEnum {
   JWT_EXPIRES = 'JWT_EXPIRES',
   OPS_KEY = 'OPS_KEY',
   ORIGIN = 'ORIGIN',
+  BCRYPT_SECRET_ROUND = 'BCRYPT_SECRET_ROUND',
   PORT = 'PORT',
 }
