@@ -4,6 +4,7 @@ import {
   mongodbMockFactory,
   replSet,
 } from '../../test/mock/mongodb.mock.factory';
+import { UserNotExistsException } from '../common/exception/user-not-exists.exception';
 import { ConfigModule } from '../config/config.module';
 import { DATABASE_CONNECTION } from '../database/constants/database.constant';
 import { DatabaseModule } from '../database/database.module';
@@ -14,7 +15,7 @@ import { UserService } from './user.service';
 describe('UserService tests', () => {
   let service: UserService;
   let database: Promise<typeof mongoose>;
-  let id: Types.ObjectId;
+  let userId: Types.ObjectId;
   let module: TestingModule;
 
   const expectedEmailTest = 'test@mail.com';
@@ -39,7 +40,7 @@ describe('UserService tests', () => {
     database = module.get<Promise<typeof mongoose>>(DATABASE_CONNECTION);
 
     const user = await service.createUser(mockCreateUserDto);
-    id = user._id;
+    userId = user._id;
   });
 
   afterAll(async () => {
@@ -54,7 +55,7 @@ describe('UserService tests', () => {
 
   // findById
   it('Should return user that find by id', async () => {
-    const user = await service.findById(id);
+    const user = await service.findById(userId);
     expect(user?.mainEmail).toEqual(expectedEmailTest);
   });
 
@@ -75,5 +76,29 @@ describe('UserService tests', () => {
     const userDoc = await service.findById(doc._id);
 
     expect(userDoc?.mainEmail).toEqual(expectedEmailTest2);
+  });
+
+  // update user
+  it('Should update a user correctly', async () => {
+    const expectedEmailTest3 = 'test3@mail.com';
+    const doc = await service.updateUser({
+      ...mockCreateUserDto,
+      id: (userId as unknown) as string,
+      mainEmail: expectedEmailTest3,
+    });
+    expect(doc?.mainEmail).toEqual(expectedEmailTest3);
+  });
+
+  // update user
+  it('Should throw when update bad user id', async () => {
+    const expectedEmailTest3 = 'test3@mail.com';
+    const notExistId = Types.ObjectId();
+    await expect(async () => {
+      await service.updateUser({
+        ...mockCreateUserDto,
+        id: notExistId.toHexString(),
+        mainEmail: expectedEmailTest3,
+      });
+    }).rejects.toThrow(UserNotExistsException);
   });
 });
