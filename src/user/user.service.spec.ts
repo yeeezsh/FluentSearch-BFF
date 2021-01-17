@@ -9,7 +9,7 @@ import { ConfigModule } from '../config/config.module';
 import { DATABASE_CONNECTION } from '../database/constants/database.constant';
 import { DatabaseModule } from '../database/database.module';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
-import { userProivders } from './user.providers';
+import { userProviders } from './user.providers';
 import { UserService } from './user.service';
 
 describe('UserService tests', () => {
@@ -28,7 +28,7 @@ describe('UserService tests', () => {
   beforeAll(async () => {
     module = await Test.createTestingModule({
       imports: [DatabaseModule, ConfigModule],
-      providers: [...userProivders, UserService],
+      providers: [...userProviders, UserService],
     })
       .overrideProvider(DATABASE_CONNECTION)
       .useFactory({

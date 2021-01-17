@@ -5,7 +5,7 @@ import { USER_COLLECTION } from './constants/user.collection.constant';
 import { USER_MODEL } from './constants/user.provider.constant';
 import userSchema from './schemas/user.schema';
 
-export const userProivders: Provider[] = [
+export const userProviders: Provider[] = [
   {
     inject: [DATABASE_CONNECTION],
     provide: USER_MODEL,
