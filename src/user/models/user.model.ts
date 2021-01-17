@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { Document } from 'mongoose';
 import { IUser } from '../interfaces/user';
 import { UserPackageEnum } from '../schemas/enums/user-package.enum';
 import { UserRoleEnum } from '../schemas/enums/user-role.enum';
@@ -50,8 +49,6 @@ export class User implements IUser {
   @Field(() => String)
   updateDate: Date;
 }
-
-export class UserDoc extends Document {}
 
 @ObjectType()
 export class UserWithId extends User {
