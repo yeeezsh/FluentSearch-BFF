@@ -59,12 +59,6 @@ describe('UserService tests', () => {
     expect(user?.mainEmail).toEqual(expectedEmailTest);
   });
 
-  // getUsers
-  it('Should return all user', async () => {
-    const users = await service.getUsers();
-    expect(users.length).toBe(1);
-  });
-
   // createUser
   it('Should create a user correctly', async () => {
     const expectedEmailTest2 = 'test2@mail.com';
@@ -100,5 +94,11 @@ describe('UserService tests', () => {
         mainEmail: expectedEmailTest3,
       });
     }).rejects.toThrow(UserNotExistsException);
+  });
+
+  // getUsers
+  it('Should return all user', async () => {
+    const users = await service.getUsers();
+    expect(users.length).toBe(2);
   });
 });
