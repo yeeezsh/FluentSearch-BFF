@@ -11,6 +11,6 @@ export enum ConfigEnvEnum {
   PORT = 'PORT',
 }
 
-export type ProcessConfigType = {
+export type ConfigEnvType = {
   [key in ConfigEnvEnum]: string;
 };

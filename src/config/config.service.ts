@@ -1,11 +1,10 @@
-import { Provider } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigAppProviderType } from './@types/config-app.type';
 import { ConfigEnvType } from './@types/config-env.type';
-import { APP_CONFIG } from './config.constant';
 
-export const ConfigProvider: Provider = {
-  provide: APP_CONFIG,
-  useValue: ((): ConfigAppProviderType => {
+@Injectable()
+export class ConfigService {
+  get(): ConfigAppProviderType {
     const {
       DATABASE_CONNECTION,
       DATABASE_USERNAME,
@@ -23,8 +22,8 @@ export const ConfigProvider: Provider = {
         connection:
           DATABASE_CONNECTION ||
           'mongodb://mongodb-sharded:27017/fluentsearch-bff',
-        username: DATABASE_USERNAME || 'root',
-        password: DATABASE_PASSWORD || 'FluentSearch@BFF.MongoDB',
+        username: DATABASE_USERNAME,
+        password: DATABASE_PASSWORD,
         authSource: DATABASE_AUTH_SOURCE || 'admin',
       },
       jwt: {
@@ -41,5 +40,5 @@ export const ConfigProvider: Provider = {
       },
       port: Number(PORT || 5000),
     };
-  })(),
-};
+  }
+}
