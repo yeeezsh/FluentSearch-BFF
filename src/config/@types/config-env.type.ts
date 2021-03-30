@@ -10,3 +10,7 @@ export enum ConfigEnvEnum {
   BCRYPT_SECRET_ROUND = 'BCRYPT_SECRET_ROUND',
   PORT = 'PORT',
 }
+
+export type ProcessConfigType = {
+  [key in ConfigEnvEnum]: string;
+};

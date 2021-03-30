@@ -1,7 +1,7 @@
 import { Provider } from '@nestjs/common';
 import { ConfigAppProviderType } from './@types/config-app.type';
+import { ProcessConfigType } from './@types/config-env.type';
 import { APP_CONFIG } from './config.constant';
-import { ProcessConfigType } from './process.config.type';
 
 export const ConfigProvider: Provider = {
   provide: APP_CONFIG,
