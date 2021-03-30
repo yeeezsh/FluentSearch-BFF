@@ -1,11 +1,14 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { gql } from 'apollo-server-express';
+import { print } from 'graphql';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { AppModel } from '../src/app.resolver';
 import { DATABASE_CONNECTION } from '../src/database/constants/database.constant';
 import { mongodbMockFactory, replSet } from './mock/mongodb.mock.factory';
+
 describe('AppResolver GraphQL', () => {
   let app: INestApplication;
 
@@ -34,13 +37,13 @@ describe('AppResolver GraphQL', () => {
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
-        query: `
-      {
-        serverStatus {
-          status
-        }
-      }
-      `,
+        query: print(gql`
+          {
+            serverStatus {
+              status
+            }
+          }
+        `),
       })
       .expect(res =>
         expect(res.body.data).toEqual({
