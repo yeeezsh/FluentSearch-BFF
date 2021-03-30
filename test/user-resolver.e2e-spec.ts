@@ -2,11 +2,8 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { gql } from 'apollo-server-express';
 import { print } from 'graphql';
-import mongoose from 'mongoose';
 import request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { DATABASE_CONNECTION } from '../src/database/constants/database.constant';
-import { mongodbMockFactory, replSet } from './mock/mongodb.mock.factory';
 
 describe('UserResolver GraphQL', () => {
   let app: INestApplication;
@@ -15,12 +12,7 @@ describe('UserResolver GraphQL', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .overrideProvider(DATABASE_CONNECTION)
-      .useFactory({
-        factory: async () => await mongodbMockFactory(),
-      })
-      .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(new ValidationPipe());
@@ -28,8 +20,6 @@ describe('UserResolver GraphQL', () => {
   });
 
   afterAll(async () => {
-    await mongoose.disconnect();
-    await replSet.stop();
     await app.close();
   });
 
@@ -49,6 +39,7 @@ describe('UserResolver GraphQL', () => {
         }
       }
     `;
+
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
@@ -67,17 +58,20 @@ describe('UserResolver GraphQL', () => {
 
   it('UpdateUser Mutation should able to update user', () => {
     const userUpdateInput = gql`
-    mutation {
-      UpdateUser(UserUpdateInput: {
-        id: "${userId}",
-        mainEmail: "test5@test.com",
-        name: "euei999"
-      }) {
-        mainEmail
-        name
+      mutation {
+        UpdateUser(
+          UserUpdateInput: {
+            id: ${userId}
+            mainEmail: "test5@test.com"
+            name: "euei999"
+          }
+        ) {
+          mainEmail
+          name
+        }
       }
-    }
-  `;
+    `;
+
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
@@ -92,7 +86,7 @@ describe('UserResolver GraphQL', () => {
       });
   });
 
-  it('CreateUser Mutation should able to validate/ preventing duplicated email', () => {
+  it('CreateUser Mutation should able to validate/preventing duplicated email', () => {
     const duplicatedUserInput = gql`
       mutation {
         CreateUser(
@@ -121,11 +115,13 @@ describe('UserResolver GraphQL', () => {
         }
       }
     `;
+
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
         query: print(duplicatedUserInput),
       })
+
       .expect(res => {
         const errors = res.body.errors;
         expect(errors[0].message).toEqual('Duplicated email');
@@ -140,5 +136,9 @@ describe('UserResolver GraphQL', () => {
             expect(errors).toHaveLength(2);
           }),
       );
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });
