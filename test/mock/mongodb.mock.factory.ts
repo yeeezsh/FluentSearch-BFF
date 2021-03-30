@@ -1,20 +1,19 @@
 import { Logger } from '@nestjs/common';
 import { MongoMemoryReplSet } from 'mongodb-memory-server';
-import mongoose from 'mongoose';
+import { ConfigAppProviderType } from '../../src/config/@types/config-app.type';
 
-export const replSet = new MongoMemoryReplSet({
-  replSet: { storageEngine: 'wiredTiger' },
-});
-
-export const mongodbMockFactory = async (): Promise<typeof mongoose> => {
+export const mongodbMockFactory = async (
+  replSet: MongoMemoryReplSet,
+): Promise<ConfigAppProviderType['database']> => {
   await replSet.waitUntilRunning();
   const uri = await replSet.getUri();
   const onJest = process.env.JEST_WORKER_ID !== undefined;
   Logger.log(`Running on Jest: ${onJest}`);
   Logger.log(`Mock replica URI: ${uri}`);
-  return await mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  });
+  return {
+    connection: uri,
+    username: '',
+    password: '',
+    authSource: 'admin',
+  };
 };
