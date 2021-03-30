@@ -1,4 +1,4 @@
-export interface ConfigurationInterface {
+export type ConfigAppProviderType = {
   database: {
     connection: string;
     username: string;
@@ -16,4 +16,4 @@ export interface ConfigurationInterface {
     round: number;
   };
   port: number;
-}
+};
