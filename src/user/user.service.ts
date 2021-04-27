@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcryptjs';
 import { Model, Types } from 'mongoose';
 import { UserNotExistsException } from '../common/exception/user-not-exists.exception';
 import { ConfigAppProviderType } from '../config/@types/config-app.type';
 import { APP_CONFIG } from '../config/config.constant';
-import { USER_MODEL } from './constants/user.provider.constant';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
 import { UserUpdateInput } from './dtos/inputs/user-update.input';
 import {
@@ -20,7 +20,7 @@ import { UserDocument } from './schemas/user.schema';
 @Injectable()
 export class UserService {
   constructor(
-    @Inject(USER_MODEL) private readonly userModel: Model<UserDocument>,
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     @Inject(APP_CONFIG) private readonly appConfig: ConfigAppProviderType,
   ) {}
 
