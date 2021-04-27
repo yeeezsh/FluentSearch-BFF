@@ -15,7 +15,6 @@ export class ConfigDatabaseService implements MongooseOptionsFactory {
       password,
       authSource,
     } = this.configService.get().database;
-    console.log(this.configService.get());
     return {
       uri: connection,
       user: username || 'root',
