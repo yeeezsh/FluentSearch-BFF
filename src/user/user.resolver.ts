@@ -16,7 +16,7 @@ export class UserResolver {
   async getUser(
     @Args('id', { type: () => String, nullable: true }) id: string,
   ) {
-    return this.userService.getUser(id);
+    return this.userService.getById(id);
   }
 
   @UseFilters(UserExceptionFilters)

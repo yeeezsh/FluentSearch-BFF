@@ -1,4 +1,4 @@
-export enum ConfigEnum {
+export enum ConfigEnvEnum {
   DATABASE_CONNECTION = 'DATABASE_CONNECTION',
   DATABASE_USERNAME = 'DATABASE_USERNAME',
   DATABASE_PASSWORD = 'DATABASE_PASSWORD',
@@ -10,3 +10,7 @@ export enum ConfigEnum {
   BCRYPT_SECRET_ROUND = 'BCRYPT_SECRET_ROUND',
   PORT = 'PORT',
 }
+
+export type ConfigEnvType = {
+  [key in ConfigEnvEnum]: string;
+};

@@ -1,10 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcryptjs';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { UserNotExistsException } from '../common/exception/user-not-exists.exception';
-import { APP_CONFIG } from '../config/config.constant';
-import { ConfigurationInterface } from '../config/config.interface';
-import { USER_MODEL } from './constants/user.provider.constant';
+import { ConfigService } from '../config/config.service';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
 import { UserUpdateInput } from './dtos/inputs/user-update.input';
 import {
@@ -20,16 +19,9 @@ import { UserDocument } from './schemas/user.schema';
 @Injectable()
 export class UserService {
   constructor(
-    @Inject(USER_MODEL) private readonly userModel: Model<UserDocument>,
-    @Inject(APP_CONFIG) private readonly appConfig: ConfigurationInterface,
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    private readonly configService: ConfigService,
   ) {}
-
-  async findById(id: Types.ObjectId): Promise<UserQueryReturns> {
-    return this.userModel
-      .findById(id)
-      .select({ password: 0 })
-      .lean();
-  }
 
   async getUsers(skip = 0, limit = 1000): Promise<UsersQueryReturns> {
     return this.userModel
@@ -40,7 +32,7 @@ export class UserService {
       .lean();
   }
 
-  async getUser(id: string): Promise<UserQueryReturns> {
+  async getById(id: string): Promise<UserQueryReturns> {
     return this.userModel
       .findById(id)
       .select({ password: 0 })
@@ -48,7 +40,7 @@ export class UserService {
   }
 
   async createUser(payload: UserRegisterInput): Promise<UserDocument> {
-    const { round } = this.appConfig.bcrypt;
+    const { round } = this.configService.get().bcrypt;
     const salt = await genSalt(round);
     const user: User = {
       ...payload,
@@ -66,8 +58,7 @@ export class UserService {
     };
 
     const doc = new this.userModel(user);
-    const saved = await doc.save();
-    return saved;
+    return doc.save();
   }
 
   async updateUser(payload: UserUpdateInput): Promise<UserDocument> {

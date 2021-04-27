@@ -12,9 +12,9 @@ type Mutation {
 }
 
 type Query {
-  serverStatus: AppModel!
   User(id: String): UserWithId
   Users(limit: Int = 1000, skip: Int = 0): [UserWithId!]!
+  serverStatus: AppModel!
 }
 
 enum UserPackageEnum {

@@ -1,24 +1,18 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import mongoose from 'mongoose';
+import { gql } from 'apollo-server-express';
+import { print } from 'graphql';
 import request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { DATABASE_CONNECTION } from '../src/database/constants/database.constant';
-import { mongodbMockFactory, replSet } from './mock/mongodb.mock.factory';
 
 describe('UserResolver GraphQL', () => {
   let app: INestApplication;
   let userId: string;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .overrideProvider(DATABASE_CONNECTION)
-      .useFactory({
-        factory: async () => await mongodbMockFactory(),
-      })
-      .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(new ValidationPipe());
@@ -26,35 +20,35 @@ describe('UserResolver GraphQL', () => {
   });
 
   afterAll(async () => {
-    await mongoose.disconnect();
-    await replSet.stop();
     await app.close();
   });
 
   it('CreateUser Mutation should able to create user', () => {
-    const userInput = `
-    mutation {
-      CreateUser(
-        UserRegisterInput: {
-          mainEmail: "test3@test.com"
-          name: "euei99"
-          password: "123456"
+    const userInput = gql`
+      mutation {
+        CreateUser(
+          UserRegisterInput: {
+            mainEmail: "test3@test.com"
+            name: "euei99"
+            password: "123456"
+          }
+        ) {
+          _id
+          mainEmail
+          name
         }
-      ) {
-        _id
-        mainEmail
-        name
       }
-    }    
-  `;
+    `;
+
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
-        query: userInput,
+        query: print(userInput),
       })
       .expect(res => {
         const user = res.body.data.CreateUser;
         userId = user._id;
+
         expect(user).toEqual({
           mainEmail: 'test3@test.com',
           name: 'euei99',
@@ -64,22 +58,27 @@ describe('UserResolver GraphQL', () => {
   });
 
   it('UpdateUser Mutation should able to update user', () => {
-    const userUpdateInput = `
-    mutation {
-      UpdateUser(UserUpdateInput: {
-        id: "${userId}",
-        mainEmail: "test5@test.com",
-        name: "euei999"
-      }) {
-        mainEmail
-        name
+    const id = userId;
+
+    const userUpdateInput = gql`
+      mutation {
+        UpdateUser(
+          UserUpdateInput: {
+            id: ${`"${id}"`}
+            mainEmail: "test5@test.com"
+            name: "euei999"
+          }
+        ) {
+          mainEmail
+          name
+        }
       }
-    }
-  `;
+    `;
+
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
-        query: userUpdateInput,
+        query: print(userUpdateInput),
       })
       .expect(res => {
         const data = res.body.data;
@@ -90,39 +89,40 @@ describe('UserResolver GraphQL', () => {
       });
   });
 
-  it('CreateUser Mutation should able to validate/ preventing duplicated email', () => {
-    const duplicatedUserInput = `
-    mutation {
-      CreateUser(
-        UserRegisterInput: {
-          mainEmail: "test5@test.com"
-          name: "euei99"
-          password: "123456"
+  it('CreateUser Mutation should able to validate/preventing duplicated email', () => {
+    const duplicatedUserInput = gql`
+      mutation {
+        CreateUser(
+          UserRegisterInput: {
+            mainEmail: "test5@test.com"
+            name: "euei99"
+            password: "123456"
+          }
+        ) {
+          mainEmail
+          name
         }
-      ) {
-        mainEmail
-        name
       }
-    }    
-  `;
-    const badUserInput = `
-    mutation {
-      CreateUser(
-        UserRegisterInput: {
-          mainEmail: "test.com"
-          name: "euei99"
-          password: "12345"
+    `;
+    const badUserInput = gql`
+      mutation {
+        CreateUser(
+          UserRegisterInput: {
+            mainEmail: "test.com"
+            name: "euei99"
+            password: "12345"
+          }
+        ) {
+          mainEmail
+          name
         }
-      ) {
-        mainEmail
-        name
       }
-    }    
-  `;
+    `;
+
     return request(app.getHttpServer())
       .post('/graphql')
       .send({
-        query: duplicatedUserInput,
+        query: print(duplicatedUserInput),
       })
       .expect(res => {
         const errors = res.body.errors;
@@ -131,12 +131,16 @@ describe('UserResolver GraphQL', () => {
       .then(() =>
         request(app.getHttpServer())
           .post('/graphql')
-          .send({ query: badUserInput })
+          .send({ query: print(badUserInput) })
           .expect(res => {
             const errors =
               res.body.errors[0].extensions.exception.response.message;
             expect(errors).toHaveLength(2);
           }),
       );
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });
