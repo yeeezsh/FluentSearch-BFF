@@ -11,11 +11,11 @@ import { UserModule } from './user/user.module';
 @Module({
   imports: [
     ConfigModule,
-    UserModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useClass: ConfigDatabaseService,
     }),
+    UserModule,
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
