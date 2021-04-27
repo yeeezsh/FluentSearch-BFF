@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcryptjs';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { UserNotExistsException } from '../common/exception/user-not-exists.exception';
 import { ConfigService } from '../config/config.service';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
@@ -23,13 +23,6 @@ export class UserService {
     private readonly configService: ConfigService,
   ) {}
 
-  async findById(id: Types.ObjectId): Promise<UserQueryReturns> {
-    return this.userModel
-      .findById(id)
-      .select({ password: 0 })
-      .lean();
-  }
-
   async getUsers(skip = 0, limit = 1000): Promise<UsersQueryReturns> {
     return this.userModel
       .find({})
@@ -39,7 +32,7 @@ export class UserService {
       .lean();
   }
 
-  async getUser(id: string): Promise<UserQueryReturns> {
+  async getById(id: string): Promise<UserQueryReturns> {
     return this.userModel
       .findById(id)
       .select({ password: 0 })

@@ -14,13 +14,6 @@ describe('UserService tests', () => {
   let userId: Types.ObjectId;
   let module: TestingModule;
 
-  // const expectedEmailTest = 'test@mail.com';
-  // const mockCreateUserDto: UserRegisterInput = {
-  //   mainEmail: expectedEmailTest,
-  //   name: 'test name',
-  //   password: '12345678',
-  // };
-
   beforeAll(async () => {
     module = await Test.createTestingModule({
       imports: [ConfigModule],
