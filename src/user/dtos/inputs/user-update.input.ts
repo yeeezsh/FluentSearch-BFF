@@ -4,7 +4,7 @@ import { UserRegisterInput } from './user-register.input';
 
 @InputType()
 export class UserUpdateInput implements Omit<UserRegisterInput, 'password'> {
-  @Field()
+  @Field({})
   id: string;
 
   @Field({ nullable: true })

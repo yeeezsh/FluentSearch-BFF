@@ -9,7 +9,7 @@ describe('UserResolver GraphQL', () => {
   let app: INestApplication;
   let userId: string;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -48,6 +48,7 @@ describe('UserResolver GraphQL', () => {
       .expect(res => {
         const user = res.body.data.CreateUser;
         userId = user._id;
+
         expect(user).toEqual({
           mainEmail: 'test3@test.com',
           name: 'euei99',
@@ -57,11 +58,12 @@ describe('UserResolver GraphQL', () => {
   });
 
   it('UpdateUser Mutation should able to update user', () => {
+    const id = userId;
     const userUpdateInput = gql`
       mutation {
         UpdateUser(
           UserUpdateInput: {
-            id: ${userId}
+            id: ${`"${id}"`}
             mainEmail: "test5@test.com"
             name: "euei999"
           }
@@ -121,7 +123,6 @@ describe('UserResolver GraphQL', () => {
       .send({
         query: print(duplicatedUserInput),
       })
-
       .expect(res => {
         const errors = res.body.errors;
         expect(errors[0].message).toEqual('Duplicated email');

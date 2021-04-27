@@ -11,6 +11,7 @@ const replSet = new MongoMemoryReplSet({
 
 beforeAll(async () => {
   const db = await mongodbMockFactory(replSet);
+
   process.env = {
     DATABASE_CONNECTION: db.connection,
     DATABASE_USERNAME: db.username,
