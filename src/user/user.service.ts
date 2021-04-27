@@ -58,8 +58,7 @@ export class UserService {
     };
 
     const doc = new this.userModel(user);
-    const saved = await doc.save();
-    return saved;
+    return await doc.save();
   }
 
   async updateUser(payload: UserUpdateInput): Promise<UserDocument> {
