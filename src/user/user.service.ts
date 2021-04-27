@@ -1,10 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcryptjs';
 import { Model, Types } from 'mongoose';
 import { UserNotExistsException } from '../common/exception/user-not-exists.exception';
-import { ConfigAppProviderType } from '../config/@types/config-app.type';
-import { APP_CONFIG } from '../config/config.constant';
+import { ConfigService } from '../config/config.service';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
 import { UserUpdateInput } from './dtos/inputs/user-update.input';
 import {
@@ -21,7 +20,7 @@ import { UserDocument } from './schemas/user.schema';
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-    @Inject(APP_CONFIG) private readonly appConfig: ConfigAppProviderType,
+    private readonly configService: ConfigService,
   ) {}
 
   async findById(id: Types.ObjectId): Promise<UserQueryReturns> {
@@ -48,7 +47,7 @@ export class UserService {
   }
 
   async createUser(payload: UserRegisterInput): Promise<UserDocument> {
-    const { round } = this.appConfig.bcrypt;
+    const { round } = this.configService.get().bcrypt;
     const salt = await genSalt(round);
     const user: User = {
       ...payload,
