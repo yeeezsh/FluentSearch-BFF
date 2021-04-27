@@ -59,6 +59,7 @@ describe('UserResolver GraphQL', () => {
 
   it('UpdateUser Mutation should able to update user', () => {
     const id = userId;
+
     const userUpdateInput = gql`
       mutation {
         UpdateUser(
