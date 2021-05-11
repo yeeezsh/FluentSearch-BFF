@@ -11,7 +11,6 @@ import { UserService } from './user.service';
 
 describe('UserService tests', () => {
   let service: UserService;
-  let userId: Types.ObjectId;
   let module: TestingModule;
 
   beforeAll(async () => {
@@ -31,7 +30,7 @@ describe('UserService tests', () => {
   it('Should return user that find by id', async () => {
     jest.spyOn(MOCK_USER_VALUE, 'lean').mockResolvedValue(MOCK_USER_DOCUMENT);
 
-    const user = await service.findById(userId);
+    const user = await service.getById(MOCK_USER_DOCUMENT._id.toHexString());
     expect(user?.mainEmail).toEqual(MOCK_USER_DOCUMENT.mainEmail);
   });
 
@@ -39,7 +38,7 @@ describe('UserService tests', () => {
   it('Should create a user correctly', async () => {
     jest.spyOn(MOCK_USER_VALUE, 'lean').mockResolvedValue(MOCK_USER_DOCUMENT);
 
-    const userDoc = await service.findById(MOCK_USER_DOCUMENT._id);
+    const userDoc = await service.getById(MOCK_USER_DOCUMENT._id.toHexString());
     expect(userDoc?.mainEmail).toEqual(MOCK_USER_DOCUMENT.mainEmail);
   });
 
