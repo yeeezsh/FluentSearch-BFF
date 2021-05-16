@@ -29,7 +29,7 @@ export class ConfigService {
         authSource: DATABASE_AUTH_SOURCE || 'admin',
       },
       jwt: {
-        secretKey: JWT_SECRET_KEY || 'FluentSearch.BFF.DB.Password',
+        secretKey: JWT_SECRET_KEY || 'FluentSearch.JWT.SECRET',
         expires: Number(JWT_EXPIRES) || 300000, // 5 minutes
       },
       opsKey: OPS_KEY || 'FluentSearch.BFF.OpsKey',
@@ -42,7 +42,7 @@ export class ConfigService {
       },
       port: Number(PORT || 5000),
       session: {
-        secret: SESSION_SECRET,
+        secret: SESSION_SECRET || 'FluentSearch.SESSION.SECRET',
         expires: Number(SESSION_EXPIRES) || 86400000, // one day
       },
     };
