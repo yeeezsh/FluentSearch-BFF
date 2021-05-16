@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
-import { UserNotExistsException } from '../common/exception/user-not-exists.exception';
+import { UserNotExistsException } from '../common/exception/user.not-exists.exception';
 import { ConfigModule } from '../config/config.module';
 import {
   MOCK_USER_DOCUMENT,
