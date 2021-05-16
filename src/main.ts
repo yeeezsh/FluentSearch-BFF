@@ -2,7 +2,9 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import { AppModule } from './app.module';
+import mongoStore from './authentication/store/mongo.store';
 import { ConfigAppProviderType } from './config/@types/config-app.type';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
@@ -21,6 +23,17 @@ async function bootstrap() {
   });
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
+  app.use(
+    session({
+      secret: config.session.secret,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: config.session.expires,
+      },
+      store: mongoStore(config),
+    }),
+  );
 
   const options = new DocumentBuilder()
     .setTitle('Fluent Search BFF')
