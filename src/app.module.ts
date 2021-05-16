@@ -4,10 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
+import { AuthenticationModule } from './authentication/authentication.module';
 import { ConfigDatabaseService } from './config/config.database.service';
 import { ConfigModule } from './config/config.module';
 import { UserModule } from './user/user.module';
-import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -21,6 +21,12 @@ import { AuthenticationModule } from './authentication/authentication.module';
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
       sortSchema: true,
+      context: ({ req, res, payload, connection }) => ({
+        req,
+        res,
+        payload,
+        connection,
+      }),
     }),
     AuthenticationModule,
   ],
