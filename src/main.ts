@@ -7,12 +7,12 @@ import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 
 async function bootstrap() {
+  Logger.log(JSON.stringify(process.env, null, 1));
   const app = await NestFactory.create(AppModule);
   const config: ConfigAppProviderType = app
     .select(ConfigModule)
     .get(ConfigService)
     .get();
-  Logger.log(config);
 
   app.enableCors({
     origin: [config.origin],
