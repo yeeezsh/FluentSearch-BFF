@@ -1,12 +1,13 @@
 
-FROM node:15.13-alpine3.13 AS dev
+FROM node:15.14.0-stretch AS dev
 COPY yarn.lock yarn.lock
 COPY package.json package.json
 RUN yarn install
 ADD . .
 CMD ["yarn", "start:dev"]
 
-FROM node:15.13-alpine3.13 AS prod
+FROM node:15.14.0-stretch AS prod
+COPY yarn.lock yarn.lock
 COPY package.json package.json
 RUN yarn install
 ADD . .
