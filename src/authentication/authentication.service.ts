@@ -14,6 +14,12 @@ export class AuthenticationService {
     private jwtService: JwtService,
   ) {}
 
+  private setToken(req: Request, token: string): void {
+    req.res?.cookie('Authorization', `Bearer ${token}`, {
+      httpOnly: true,
+    });
+  }
+
   async userLogin(
     req: Request,
     args: UserLoginInputDTO,
@@ -28,9 +34,7 @@ export class AuthenticationService {
     };
     const token = await this.jwtService.signAsync(parsed);
 
-    req.res?.cookie('Authorization', `Bearer ${token}`, {
-      httpOnly: true,
-    });
+    this.setToken(req, token);
     const session = req.session as Record<string, any>;
     session.user = parsed;
 
@@ -38,5 +42,14 @@ export class AuthenticationService {
       ...user,
       _id: user._id,
     };
+  }
+
+  async refreshToken(req: Request): Promise<string> {
+    const session = req.session as Record<string, any>;
+    if (!session.user) throw new UserInvalidCredentialException();
+    const user = session.user;
+    const token = await this.jwtService.signAsync(user);
+    this.setToken(req, token);
+    return 'refreshed';
   }
 }

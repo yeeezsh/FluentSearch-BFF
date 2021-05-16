@@ -10,6 +10,7 @@ type Mutation {
   CreateUser(UserRegisterInput: UserRegisterInput!): UserWithId!
   Login(UserLoginInputDTO: UserLoginInputDTO!): UserSessionDTO!
   Logout: String
+  RefreshToken: String
   UpdateUser(UserUpdateInput: UserUpdateInput!): UserWithId!
 }
 
