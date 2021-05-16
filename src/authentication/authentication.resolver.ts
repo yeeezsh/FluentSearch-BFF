@@ -16,4 +16,10 @@ export class AuthenticationResolver {
   ) {
     return this.authenticationService.userLogin(req, args);
   }
+
+  @Mutation(() => String, { nullable: true })
+  async Logout(@Context('req') req: Request) {
+    req.session.destroy(() => ({}));
+    return 'logged out';
+  }
 }

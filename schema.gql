@@ -9,6 +9,7 @@ type AppModel {
 type Mutation {
   CreateUser(UserRegisterInput: UserRegisterInput!): UserWithId!
   Login(UserLoginInputDTO: UserLoginInputDTO!): UserSessionDTO!
+  Logout: String
   UpdateUser(UserUpdateInput: UserUpdateInput!): UserWithId!
 }
 
