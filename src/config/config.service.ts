@@ -43,7 +43,7 @@ export class ConfigService {
       port: Number(PORT || 5000),
       session: {
         secret: SESSION_SECRET,
-        expires: SESSION_EXPIRES,
+        expires: Number(SESSION_EXPIRES),
       },
     };
   }

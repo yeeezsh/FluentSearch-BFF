@@ -18,6 +18,6 @@ export type ConfigAppProviderType = {
   port: number;
   session: {
     secret: string;
-    expires: string;
+    expires: number;
   };
 };
