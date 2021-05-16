@@ -18,6 +18,11 @@ import { UserModule } from './user/user.module';
     }),
     UserModule,
     GraphQLModule.forRoot({
+      playground: {
+        settings: {
+          'request.credentials': 'include',
+        },
+      },
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
       sortSchema: true,
