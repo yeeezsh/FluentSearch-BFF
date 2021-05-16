@@ -83,4 +83,11 @@ describe('UserService tests', () => {
     const users = await service.getUsers();
     expect(users.length).toBe(2);
   });
+
+  // getUserByEmail
+  it('Should call findOne when getUserByEmail', async () => {
+    const expectedCalled = jest.spyOn(MOCK_USER_VALUE, 'findOne');
+    await service.getUserByEmail('john@doe.com');
+    expect(expectedCalled).toBeCalled();
+  });
 });

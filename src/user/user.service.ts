@@ -73,4 +73,8 @@ export class UserService {
     if (!user) throw new UserNotExistsException();
     return user;
   }
+
+  async getUserByEmail(email: string): Promise<UserDocument | null> {
+    return this.userModel.findOne({ mainEmail: email });
+  }
 }
