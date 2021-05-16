@@ -7,7 +7,7 @@ export type ConfigAppProviderType = {
   };
   jwt: {
     secretKey: string;
-    expires: string;
+    expires: number;
   };
   opsKey: string;
   node_env: 'production' | 'development';
