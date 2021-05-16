@@ -16,6 +16,8 @@ export class ConfigService {
       ORIGIN,
       BCRYPT_SECRET_ROUND,
       PORT,
+      SESSION_EXPIRES,
+      SESSION_SECRET,
     } = process.env as ConfigEnvType;
     return {
       database: {
@@ -39,6 +41,10 @@ export class ConfigService {
         round: Number(BCRYPT_SECRET_ROUND || 10),
       },
       port: Number(PORT || 5000),
+      session: {
+        secret: SESSION_SECRET,
+        expires: SESSION_EXPIRES,
+      },
     };
   }
 }
