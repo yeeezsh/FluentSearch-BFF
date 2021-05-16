@@ -1,4 +1,3 @@
-import { Provider } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 import { IUser } from '../interfaces/user';
@@ -6,7 +5,6 @@ import { User } from '../models/user.model';
 import { UserPackageEnum } from '../schemas/enums/user-package.enum';
 import { UserRoleEnum } from '../schemas/enums/user-role.enum';
 import { UserZoneEnum } from '../schemas/enums/user.zone.enum';
-import { UserService } from '../user.service';
 
 export const MOCK_USER_DOCUMENT = {
   _id: Types.ObjectId(),
@@ -50,7 +48,6 @@ export const MOCK_USER_MODEL = {
   useValue: MOCK_USER_VALUE,
 };
 
-export const MOCK_USER_SERVICE: Provider = {
-  provide: UserService,
-  useValue: () => ({}),
+export const MOCK_USER_SERVICE = {
+  getUserByEmail: jest.fn().mockResolvedValue(MOCK_USER_DOCUMENT),
 };
