@@ -30,7 +30,7 @@ export class ConfigService {
       },
       jwt: {
         secretKey: JWT_SECRET_KEY || 'FluentSearch.BFF.DB.Password',
-        expires: JWT_EXPIRES || '3600s',
+        expires: Number(JWT_EXPIRES) || 300000, // 5 minutes
       },
       opsKey: OPS_KEY || 'FluentSearch.BFF.OpsKey',
       node_env:
@@ -43,7 +43,7 @@ export class ConfigService {
       port: Number(PORT || 5000),
       session: {
         secret: SESSION_SECRET,
-        expires: Number(SESSION_EXPIRES),
+        expires: Number(SESSION_EXPIRES) || 86400000, // one day
       },
     };
   }
