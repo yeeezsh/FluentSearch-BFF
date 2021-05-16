@@ -40,6 +40,7 @@ export const MOCK_USER_VALUE = {
   findById: jest.fn().mockReturnThis(),
   select: jest.fn().mockReturnThis(),
   lean: jest.fn().mockReturnThis(),
+  findOne: jest.fn(),
 };
 
 export const MOCK_USER_MODEL = {
