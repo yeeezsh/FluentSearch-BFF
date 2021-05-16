@@ -87,7 +87,9 @@ describe('UserService tests', () => {
   // getUserByEmail
   it('Should call findOne when getUserByEmail', async () => {
     const expectedCalled = jest.spyOn(MOCK_USER_VALUE, 'findOne');
+    const expectedCalled2 = jest.spyOn(MOCK_USER_VALUE, 'lean');
     await service.getUserByEmail('john@doe.com');
     expect(expectedCalled).toBeCalled();
+    expect(expectedCalled2).toBeCalled();
   });
 });
