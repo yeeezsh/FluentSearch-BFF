@@ -1,0 +1,63 @@
+version: '3.4'
+services:
+  fluentsearch-bff:
+    image: yee2542/fluentsearch-bff
+    container_name: FluentSearch-BFF
+    restart: always
+    depends_on:
+      - fluentsearch-bff-mongos
+    environment:
+      NODE_ENV: 'development'
+      TZ: Asia/Bangkok
+      ORIGIN: http(|s):\/\/localhost:5000
+      DATABASE_CONNECTION: 'mongodb://fluentsearch-bff-mongos/fluentsearch-bff'
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: FluentSearch@BFF.MongoDB
+      DATABASE_AUTH_SOURCE: admin
+      PORT: 5000
+    ports:
+      - '5000:5000'
+      - '9229:9229'
+    logging:
+      options:
+        max-size: 50m
+  fluentsearch-bff-mongos:
+    image: 'bitnami/mongodb-sharded:4.4'
+    restart: on-failure
+    environment:
+      MONGODB_ADVERTISED_HOSTNAME: fluentsearch-bff-mongos
+      MONGODB_SHARDING_MODE: mongos
+      MONGODB_CFG_PRIMARY_HOST: fluentsearch-bff-cfg
+      MONGODB_CFG_REPLICA_SET_NAME: fluentsearch-bff-cfg
+      MONGODB_REPLICA_SET_KEY: fluentsearchbff
+      MONGODB_ROOT_PASSWORD: FluentSearch@BFF.MongoDB
+      TZ: Asia/Bangkok
+    ports:
+      - '27017:27017'
+  fluentsearch-bff-shard:
+    image: 'bitnami/mongodb-sharded:4.4'
+    restart: on-failure
+    environment:
+      MONGODB_ADVERTISED_HOSTNAME: fluentsearch-bff-shard
+      MONGODB_SHARDING_MODE: shardsvr
+      MONGODB_MONGOS_HOST: fluentsearch-bff-mongos
+      MONGODB_ROOT_PASSWORD: FluentSearch@BFF.MongoDB
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_KEY: fluentsearchbff
+      MONGODB_REPLICA_SET_NAME: fluentsearch-shard0
+      TZ: Asia/Bangkok
+    volumes:
+      - './db/shard-0:/bitnami'
+  fluentsearch-bff-cfg:
+    image: 'bitnami/mongodb-sharded:4.4'
+    restart: on-failure
+    environment:
+      MONGODB_ADVERTISED_HOSTNAME: fluentsearch-bff-cfg
+      MONGODB_SHARDING_MODE: configsvr
+      MONGODB_ROOT_PASSWORD: FluentSearch@BFF.MongoDB
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_KEY: fluentsearchbff
+      MONGODB_REPLICA_SET_NAME: fluentsearch-cfg
+      TZ: Asia/Bangkok
+    volumes:
+      - './db/cfg:/bitnami'
