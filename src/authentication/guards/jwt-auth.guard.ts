@@ -21,6 +21,7 @@ export class JwtAuthGuard implements CanActivate {
     const extractToken = token.replace('Bearer ', '');
     const { _id } = this.jwtService.verify(extractToken, {
       secret: this.configService.get().jwt.secretKey,
+      ignoreExpiration: false,
     }) as Pick<UserSessionDto, '_id'>;
     const valid = !!_id;
     return valid;
