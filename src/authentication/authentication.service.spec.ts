@@ -1,7 +1,7 @@
 import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import bcryptjs from 'bcryptjs';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { MOCK_USER_DOCUMENT, MOCK_USER_SERVICE } from '../user/tests/mock';
 import { UserService } from '../user/user.service';
 import { AuthenticationService } from './authentication.service';
@@ -32,13 +32,12 @@ describe('AuthenticationService', () => {
         user: MOCK_USER_DOCUMENT,
       },
     } as unknown) as Request<any>;
-    const mockRes = {} as Response;
     const mockArgs = {
       password: 'mockpassword',
     } as UserLoginInputDTO;
 
     jest.spyOn(bcryptjs, 'compare').mockImplementation(() => true);
-    await service.userLogin(mockReq, mockRes, mockArgs);
+    await service.userLogin(mockReq, mockArgs);
     const expectedCalled = jest.spyOn(MOCK_USER_SERVICE, 'getUserByEmail');
 
     expect(expectedCalled).toBeCalled();

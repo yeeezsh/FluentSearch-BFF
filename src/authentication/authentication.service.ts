@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { UserInvalidCredentialException } from '../common/exception/user.invalid-credential.exception';
 import { UserService } from '../user/user.service';
 import { UserLoginInputDTO } from './dtos/user-login.input.dto';
@@ -16,7 +16,6 @@ export class AuthenticationService {
 
   async userLogin(
     req: Request,
-    res: Response,
     args: UserLoginInputDTO,
   ): Promise<UserSessionDTO> {
     const user = await this.userService.getUserByEmail(args.email);

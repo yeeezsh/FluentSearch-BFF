@@ -14,6 +14,6 @@ export class AuthenticationResolver {
     @Context('res') res: Response,
     @Args(UserLoginInputDTO.name) args: UserLoginInputDTO,
   ) {
-    return this.authenticationService.userLogin(req, res, args);
+    return this.authenticationService.userLogin(req, args);
   }
 }
