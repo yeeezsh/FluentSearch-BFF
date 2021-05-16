@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { ConfigDatabaseService } from './config/config.database.service';
 import { ConfigModule } from './config/config.module';
 import { UserModule } from './user/user.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UserModule } from './user/user.module';
       autoSchemaFile: 'schema.gql',
       sortSchema: true,
     }),
+    AuthenticationModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
