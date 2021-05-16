@@ -11,7 +11,7 @@ registerEnumType(UserPackageEnum, { name: 'UserPackageEnumSession' });
 registerEnumType(UserZoneEnum, { name: 'UserZoneEnumSession' });
 
 @ObjectType()
-export class UserSession implements UserSessionDto {
+export class UserSessionDTO implements UserSessionDto {
   @Field()
   _id: string;
 
