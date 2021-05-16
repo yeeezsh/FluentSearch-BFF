@@ -1,6 +1,7 @@
-import { UseFilters } from '@nestjs/common';
+import { UseFilters, UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Request } from 'express';
+import { JwtAuthGuard } from '../authentication/guards/jwt-auth.guard';
 import { UserExceptionFilters } from '../common/filters/user-error.filter';
 import { SkipLimitArgs } from './dtos/args/skip-limit.args';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
@@ -21,6 +22,7 @@ export class UserResolver {
   }
 
   // user by session
+  @UseGuards(JwtAuthGuard)
   @Query(() => UserWithId, { nullable: true })
   async getUserBySession(@Context('req') req: Request) {
     const session = req.session as Record<string, any>;
