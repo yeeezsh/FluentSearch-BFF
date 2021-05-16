@@ -47,6 +47,7 @@ export class AuthenticationService {
   async refreshToken(req: Request): Promise<string> {
     const session = req.session as Record<string, any>;
     if (!session.user) throw new UserInvalidCredentialException();
+    req.session.touch();
     const user = session.user;
     const token = await this.jwtService.signAsync(user);
     this.setToken(req, token);
