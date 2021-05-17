@@ -17,8 +17,11 @@ export class ConfigDatabaseService implements MongooseOptionsFactory {
     } = this.configService.get().database;
     return {
       uri: connection,
-      user: username,
-      pass: password,
+      auth: {
+        user: username,
+        password: password,
+      },
+      authMechanism: 'SCRAM-SHA-1',
       authSource: authSource,
       useUnifiedTopology: true,
       useCreateIndex: true,
