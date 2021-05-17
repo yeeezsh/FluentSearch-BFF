@@ -15,7 +15,7 @@ type Mutation {
 }
 
 type Query {
-  User(id: String): UserWithId
+  User(id: String!): UserWithId
   Users(limit: Int = 1000, skip: Int = 0): [UserWithId!]!
   getUserBySession: UserWithId
   serverStatus: AppModel!

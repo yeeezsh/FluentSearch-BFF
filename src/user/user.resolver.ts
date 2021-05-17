@@ -15,9 +15,7 @@ export class UserResolver {
 
   // user
   @Query(() => UserWithId, { name: 'User', nullable: true })
-  async getUser(
-    @Args('id', { type: () => String, nullable: true }) id: string,
-  ) {
+  async getUser(@Args('id', { type: () => String }) id: string) {
     return this.userService.getById(id);
   }
 

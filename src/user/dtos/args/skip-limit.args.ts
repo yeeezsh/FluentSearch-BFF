@@ -4,10 +4,10 @@ import { Max } from 'class-validator';
 
 @ArgsType()
 export class SkipLimitArgs {
-  @Field(type => Int)
+  @Field(() => Int, { nullable: false })
   skip = 0;
 
-  @Field(type => Int)
+  @Field(() => Int, { nullable: false })
   @Max(1000)
   limit = 1000;
 }
