@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
@@ -10,6 +10,7 @@ import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 
 async function bootstrap() {
+  Logger.log(JSON.stringify(process.env, null, 1));
   const app = await NestFactory.create(AppModule);
   const config: ConfigAppProviderType = app
     .select(ConfigModule)

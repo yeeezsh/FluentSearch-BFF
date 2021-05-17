@@ -8,8 +8,5 @@
     "jest.setup.ts",
     "generate-gql.ts",
     "schema.gql"
-  ],
-  "compilerOptions": {
-    "skipLibCheck": true
-  }
+  ]
 }
