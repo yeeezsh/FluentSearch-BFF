@@ -21,7 +21,6 @@ export class ConfigDatabaseService implements MongooseOptionsFactory {
         user: username,
         password: password,
       },
-      authMechanism: 'SCRAM-SHA-1',
       authSource: authSource,
       useUnifiedTopology: true,
       useCreateIndex: true,
