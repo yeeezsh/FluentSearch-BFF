@@ -23,7 +23,6 @@ export class JwtAuthGuard implements CanActivate {
       secret: this.configService.get().jwt.secretKey,
       ignoreExpiration: false,
     }) as Pick<UserSessionDto, '_id'>;
-    const valid = !!_id;
-    return valid;
+    return !!_id;
   }
 }
