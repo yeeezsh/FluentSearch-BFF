@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcryptjs';
-import { Model } from 'mongoose';
-import { UserNotExistsException } from '../common/exception/user-not-exists.exception';
+import { LeanDocument, Model } from 'mongoose';
+import { UserNotExistsException } from '../common/exception/user.not-exists.exception';
 import { ConfigService } from '../config/config.service';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
 import { UserUpdateInput } from './dtos/inputs/user-update.input';
@@ -70,6 +70,12 @@ export class UserService {
         new: true,
       },
     );
+    if (!user) throw new UserNotExistsException();
+    return user;
+  }
+
+  async getUserByEmail(email: string): Promise<LeanDocument<UserDocument>> {
+    const user = await this.userModel.findOne({ mainEmail: email }).lean();
     if (!user) throw new UserNotExistsException();
     return user;
   }

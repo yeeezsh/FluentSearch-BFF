@@ -40,9 +40,14 @@ export const MOCK_USER_VALUE = {
   findById: jest.fn().mockReturnThis(),
   select: jest.fn().mockReturnThis(),
   lean: jest.fn().mockReturnThis(),
+  findOne: jest.fn().mockReturnThis(),
 };
 
 export const MOCK_USER_MODEL = {
   provide: getModelToken(User.name),
   useValue: MOCK_USER_VALUE,
+};
+
+export const MOCK_USER_SERVICE = {
+  getUserByEmail: jest.fn().mockResolvedValue(MOCK_USER_DOCUMENT),
 };

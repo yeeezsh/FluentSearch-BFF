@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
-import { UserNotExistsException } from '../common/exception/user-not-exists.exception';
+import { UserNotExistsException } from '../common/exception/user.not-exists.exception';
 import { ConfigModule } from '../config/config.module';
 import {
   MOCK_USER_DOCUMENT,
@@ -82,5 +82,14 @@ describe('UserService tests', () => {
 
     const users = await service.getUsers();
     expect(users.length).toBe(2);
+  });
+
+  // getUserByEmail
+  it('Should call findOne when getUserByEmail', async () => {
+    const expectedCalled = jest.spyOn(MOCK_USER_VALUE, 'findOne');
+    const expectedCalled2 = jest.spyOn(MOCK_USER_VALUE, 'lean');
+    await service.getUserByEmail('john@doe.com');
+    expect(expectedCalled).toBeCalled();
+    expect(expectedCalled2).toBeCalled();
   });
 });

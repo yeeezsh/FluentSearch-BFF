@@ -8,16 +8,30 @@ type AppModel {
 
 type Mutation {
   CreateUser(UserRegisterInput: UserRegisterInput!): UserWithId!
+  Login(UserLoginInputDTO: UserLoginInputDTO!): UserSessionDTO!
+  Logout: String
+  RefreshToken: String
   UpdateUser(UserUpdateInput: UserUpdateInput!): UserWithId!
 }
 
 type Query {
-  User(id: String): UserWithId
+  User(id: String!): UserWithId
   Users(limit: Int = 1000, skip: Int = 0): [UserWithId!]!
+  getUserBySession: UserWithId
   serverStatus: AppModel!
 }
 
+input UserLoginInputDTO {
+  email: String!
+  password: String!
+}
+
 enum UserPackageEnum {
+  freeUser
+  paidUser
+}
+
+enum UserPackageEnumSession {
   freeUser
   paidUser
 }
@@ -32,6 +46,21 @@ enum UserRoleEnum {
   admin
   staff
   user
+}
+
+enum UserRoleEnumSession {
+  admin
+  staff
+  user
+}
+
+type UserSessionDTO {
+  _id: String!
+  mainEmail: String!
+  name: String!
+  package: UserPackageEnumSession!
+  role: UserRoleEnumSession!
+  zone: UserZoneEnumSession!
 }
 
 type UserToken {
@@ -61,6 +90,11 @@ type UserWithId {
 }
 
 enum UserZoneEnum {
+  TH1
+  TH2
+}
+
+enum UserZoneEnumSession {
   TH1
   TH2
 }

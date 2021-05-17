@@ -16,6 +16,8 @@ export class ConfigService {
       ORIGIN,
       BCRYPT_SECRET_ROUND,
       PORT,
+      SESSION_EXPIRES,
+      SESSION_SECRET,
     } = process.env as ConfigEnvType;
     return {
       database: {
@@ -24,11 +26,11 @@ export class ConfigService {
           'mongodb://mongodb-sharded:27017/fluentsearch-bff',
         username: DATABASE_USERNAME,
         password: DATABASE_PASSWORD,
-        authSource: DATABASE_AUTH_SOURCE || 'admin',
+        authSource: DATABASE_AUTH_SOURCE,
       },
       jwt: {
-        secretKey: JWT_SECRET_KEY || 'FluentSearch.BFF.DB.Password',
-        expires: JWT_EXPIRES || '3600s',
+        secretKey: JWT_SECRET_KEY || 'FluentSearch.JWT.SECRET',
+        expires: Number(JWT_EXPIRES) || 300000, // 5 minutes
       },
       opsKey: OPS_KEY || 'FluentSearch.BFF.OpsKey',
       node_env:
@@ -39,6 +41,10 @@ export class ConfigService {
         round: Number(BCRYPT_SECRET_ROUND || 10),
       },
       port: Number(PORT || 5000),
+      session: {
+        secret: SESSION_SECRET || 'FluentSearch.SESSION.SECRET',
+        expires: Number(SESSION_EXPIRES) || 86400000, // one day
+      },
     };
   }
 }
