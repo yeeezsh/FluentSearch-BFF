@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import {
   MongooseModuleOptions,
   MongooseOptionsFactory,
@@ -15,6 +15,8 @@ export class ConfigDatabaseService implements MongooseOptionsFactory {
       password,
       authSource,
     } = this.configService.get().database;
+
+    Logger.log(this.configService.get().database, 'DB config');
     return {
       uri: connection,
       auth: {
