@@ -18,6 +18,8 @@ import { UserModule } from './user/user.module';
     }),
     UserModule,
     GraphQLModule.forRoot({
+      path: '/graphql',
+      introspection: true,
       playground: {
         settings: {
           'request.credentials': 'include',
