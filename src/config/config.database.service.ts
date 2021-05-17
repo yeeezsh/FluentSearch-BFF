@@ -16,13 +16,15 @@ export class ConfigDatabaseService implements MongooseOptionsFactory {
       authSource,
     } = this.configService.get().database;
 
+    const auth = {
+      user: username,
+      password: password,
+    };
+
     Logger.log(this.configService.get().database, 'DB config');
     return {
       uri: connection,
-      auth: {
-        user: username,
-        password: password,
-      },
+      auth: auth.user ? auth : undefined,
       authSource: authSource,
       useUnifiedTopology: true,
       useCreateIndex: true,

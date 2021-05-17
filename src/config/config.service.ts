@@ -26,7 +26,7 @@ export class ConfigService {
           'mongodb://mongodb-sharded:27017/fluentsearch-bff',
         username: DATABASE_USERNAME,
         password: DATABASE_PASSWORD,
-        authSource: DATABASE_AUTH_SOURCE || 'admin',
+        authSource: DATABASE_AUTH_SOURCE,
       },
       jwt: {
         secretKey: JWT_SECRET_KEY || 'FluentSearch.JWT.SECRET',
