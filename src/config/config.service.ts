@@ -18,8 +18,12 @@ export class ConfigService {
       PORT,
       SESSION_EXPIRES,
       SESSION_SECRET,
+      HOSTNAME,
+      MAIN_HOSTNAME,
     } = process.env as ConfigEnvType;
     return {
+      hostname: HOSTNAME,
+      main_hostname: MAIN_HOSTNAME,
       database: {
         connection:
           DATABASE_CONNECTION ||
