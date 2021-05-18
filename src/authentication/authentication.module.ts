@@ -13,6 +13,7 @@ const JwtModuleBase = JwtModule.registerAsync({
     secret: config.get().jwt.secretKey,
     signOptions: {
       expiresIn: config.get().jwt.expires,
+      algorithm: 'HS256',
     },
   }),
 });
