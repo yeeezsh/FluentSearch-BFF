@@ -2,6 +2,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import bcryptjs from 'bcryptjs';
 import { Request } from 'express';
+import { ConfigModule } from '../config/config.module';
 import { MOCK_USER_DOCUMENT, MOCK_USER_SERVICE } from '../user/tests/mock';
 import { UserService } from '../user/user.service';
 import { AuthenticationService } from './authentication.service';
@@ -12,7 +13,7 @@ describe('AuthenticationService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [JwtModule.register({ secret: 'mockSecret' })],
+      imports: [JwtModule.register({ secret: 'mockSecret' }), ConfigModule],
       providers: [AuthenticationService, UserService],
     })
       .overrideProvider(UserService)
