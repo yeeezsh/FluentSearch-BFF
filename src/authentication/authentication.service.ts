@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
 import { Request } from 'express';
 import { UserInvalidCredentialException } from '../common/exception/user.invalid-credential.exception';
+import { ConfigService } from '../config/config.service';
 import { UserService } from '../user/user.service';
 import { UserLoginInputDTO } from './dtos/user-login.input.dto';
 import { UserSessionDTO } from './dtos/user-session.dto';
@@ -12,11 +13,13 @@ export class AuthenticationService {
   constructor(
     private readonly userService: UserService,
     private jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
 
   private setToken(req: Request, token: string): void {
     req.res?.cookie('Authorization', `Bearer ${token}`, {
       httpOnly: true,
+      domain: this.configService.get().main_hostname,
     });
   }
 
