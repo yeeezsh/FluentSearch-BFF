@@ -20,6 +20,7 @@ import { UserModule } from './user/user.module';
     UserModule,
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         path: '/graphql',
         introspection: true,
