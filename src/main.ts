@@ -31,6 +31,7 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         maxAge: config.session.expires,
+        domain: config.hostname,
       },
       store: mongoStore(config),
     }),
