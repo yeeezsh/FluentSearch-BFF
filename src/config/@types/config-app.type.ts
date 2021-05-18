@@ -1,5 +1,6 @@
 export type ConfigAppProviderType = {
   hostname: string;
+  main_hostname: string;
   database: {
     connection: string;
     username: string;

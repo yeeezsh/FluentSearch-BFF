@@ -12,6 +12,7 @@ export enum ConfigEnvEnum {
   BCRYPT_SECRET_ROUND = 'BCRYPT_SECRET_ROUND',
   PORT = 'PORT',
   HOSTNAME = 'HOSTNAME',
+  MAIN_HOSTNAME = 'MAIN_HOSTNAME',
 }
 
 export type ConfigEnvType = {
