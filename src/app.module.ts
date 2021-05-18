@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { ConfigDatabaseService } from './config/config.database.service';
 import { ConfigModule } from './config/config.module';
+import { ConfigService } from './config/config.service';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -17,22 +18,29 @@ import { UserModule } from './user/user.module';
       useClass: ConfigDatabaseService,
     }),
     UserModule,
-    GraphQLModule.forRoot({
-      path: '/graphql',
-      introspection: true,
-      playground: {
-        settings: {
-          'request.credentials': 'include',
+    GraphQLModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        path: '/graphql',
+        introspection: true,
+        playground: {
+          settings: {
+            'request.credentials': 'include',
+          },
         },
-      },
-      installSubscriptionHandlers: true,
-      autoSchemaFile: 'schema.gql',
-      sortSchema: true,
-      context: ({ req, res, payload, connection }) => ({
-        req,
-        res,
-        payload,
-        connection,
+        cors: {
+          origin: configService.get().origin,
+          credentials: true,
+        },
+        installSubscriptionHandlers: true,
+        autoSchemaFile: 'schema.gql',
+        sortSchema: true,
+        context: ({ req, res, payload, connection }) => ({
+          req,
+          res,
+          payload,
+          connection,
+        }),
       }),
     }),
     AuthenticationModule,
