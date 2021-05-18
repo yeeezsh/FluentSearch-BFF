@@ -17,8 +17,26 @@ type Mutation {
 type Query {
   User(id: String!): UserWithId
   Users(limit: Int = 1000, skip: Int = 0): [UserWithId!]!
+  getRecentFiles(limit: Int = 1000, skip: Int = 0): RecentFiles!
   getUserBySession: UserWithId
   serverStatus: AppModel!
+}
+
+type RecentFile {
+  createAt: String!
+  label: String!
+  updateAt: String!
+  uri: String!
+  uri_thumbnail: String!
+}
+
+type RecentFiles {
+  result: [RecentPreviews!]!
+}
+
+type RecentPreviews {
+  date: String!
+  files: [RecentFile!]
 }
 
 input UserLoginInputDTO {
