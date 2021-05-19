@@ -19,6 +19,11 @@ services:
       SESSION_EXPIRES: 86400000
       STORAGE_ENDPOINT: storage.fluentsearch.ml
       PORT: 5000
+      MINIO_ACCESS_KEY: 'root'
+      MINIO_SECRET_KEY: '12345678'
+      MINIO_SERVER_ENDPOINT: 'minio'
+      MINIO_SERVER_PORT: 9000
+      MINIO_SERVER_SSL: 'false'
     build:
       context: ./
       dockerfile: Dockerfile
@@ -72,3 +77,11 @@ services:
       TZ: Asia/Bangkok
     volumes:
       - './db/cfg:/bitnami'
+  minio:
+    image: bitnami/minio:latest
+    environment:
+      MINIO_ACCESS_KEY: 'root'
+      MINIO_SECRET_KEY: '12345678'
+      MINIO_SERVER_HOST: 'minio'
+    ports:
+      - '9000:9000'
