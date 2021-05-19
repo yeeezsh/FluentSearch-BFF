@@ -40,6 +40,7 @@
     "graphql-tools": "^7.0.2",
     "minio": "^7.0.18",
     "mongoose": "^5.12.9",
+    "nestjs-minio-client": "^1.0.6",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
