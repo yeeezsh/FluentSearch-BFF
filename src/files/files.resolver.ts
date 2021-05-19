@@ -7,7 +7,7 @@ import { RecentFiles } from './dtos/recent-files.dto';
 export class FilesResolver {
   constructor(private readonly configService: ConfigService) {}
   @Query(() => RecentFiles)
-  async getRecentFiles(@Args() skipLimit: SkipLimitArgs): Promise<RecentFiles> {
+  async GetRecentFiles(@Args() skipLimit: SkipLimitArgs): Promise<RecentFiles> {
     const genUri = () =>
       `http://${this.configService.get().storage_endpoint}/${Math.random()
         .toPrecision(4)
