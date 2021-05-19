@@ -78,6 +78,7 @@ export class UserService {
       await this.createBucket(doc?._id);
     } catch (err) {
       Logger.error('bucket create error', 'Minio');
+      await this.userModel.findByIdAndRemove(saved._id);
       throw new InternalServerErrorException('minio create bucket error');
     }
     return saved;
