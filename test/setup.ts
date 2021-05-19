@@ -17,6 +17,11 @@ beforeAll(async () => {
     DATABASE_USERNAME: db.username,
     DATABASE_PASSWORD: db.password,
     DATABASE_AUTH_SOURCE: db.authSource,
+    MINIO_ACCESS_KEY: 'root',
+    MINIO_SECRET_KEY: '12345678',
+    MINIO_SERVER_ENDPOINT: 'minio',
+    MINIO_SERVER_PORT: '9000',
+    MINIO_SERVER_SSL: 'false',
   } as ConfigEnvType;
 });
 
