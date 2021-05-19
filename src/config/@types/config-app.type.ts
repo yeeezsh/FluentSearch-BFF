@@ -27,5 +27,7 @@ export type ConfigAppProviderType = {
     endpoint: string;
     access_key: string;
     secret_key: string;
+    port: number;
+    ssl: boolean;
   };
 };
