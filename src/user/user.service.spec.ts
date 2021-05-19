@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
+import { MinioModule, MinioService } from 'nestjs-minio-client';
 import { UserNotExistsException } from '../common/exception/user.not-exists.exception';
 import { ConfigModule } from '../config/config.module';
 import {
@@ -15,9 +16,19 @@ describe('UserService tests', () => {
 
   beforeAll(async () => {
     module = await Test.createTestingModule({
-      imports: [ConfigModule],
+      imports: [
+        ConfigModule,
+        MinioModule.register({
+          endPoint: 'mock',
+          accessKey: 'mock',
+          secretKey: 'mock',
+        }),
+      ],
       providers: [MOCK_USER_MODEL, UserService],
-    }).compile();
+    })
+      .overrideProvider(MinioService)
+      .useValue(jest.fn())
+      .compile();
 
     service = module.get<UserService>(UserService);
   });
