@@ -99,6 +99,5 @@ export class UserService {
       Logger.error(err);
       throw err;
     }
-    return;
   }
 }
