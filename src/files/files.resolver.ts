@@ -1,11 +1,19 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+import { ConfigService } from '../config/config.service';
 import { SkipLimitArgs } from '../user/dtos/args/skip-limit.args';
 import { RecentFiles } from './dtos/recent-files.dto';
 
 @Resolver()
 export class FilesResolver {
+  constructor(private readonly configService: ConfigService) {}
   @Query(() => RecentFiles)
   async getRecentFiles(@Args() skipLimit: SkipLimitArgs): Promise<RecentFiles> {
+    const genUri = () =>
+      `http://${this.configService.get().storage_endpoint}/${Math.random()
+        .toPrecision(4)
+        .slice(4)}/${Math.random()
+        .toPrecision(8)
+        .slice(2)}`;
     return {
       result: [
         {
@@ -13,47 +21,40 @@ export class FilesResolver {
           files: [
             {
               label: 'test.jpeg',
-              uri: 'http://storage.fluentsearch.ml/123/456',
-              uri_thumbnail: 'http://storage.fluentsearch.ml/123/456',
-              createAt: new Date(),
-              updateAt: new Date(),
             },
-
             {
               label: 'test1.jpeg',
-              uri: 'http://storage.fluentsearch.ml/123/456',
-              uri_thumbnail: 'http://storage.fluentsearch.ml/123/456',
-              createAt: new Date(),
-              updateAt: new Date(),
             },
             {
               label: 'test2.jpeg',
-              uri: 'http://storage.fluentsearch.ml/123/456',
-              uri_thumbnail: 'http://storage.fluentsearch.ml/123/456',
-              createAt: new Date(),
-              updateAt: new Date(),
             },
-          ],
+          ].map(el => ({
+            ...el,
+            uri_thumbnail: genUri(),
+            uri: genUri(),
+            createAt: new Date(),
+            updateAt: new Date(),
+          })),
         },
         {
           date: new Date('01/01/1999'),
           files: [
             {
-              label: 'test.jpeg',
-              uri: 'http://storage.fluentsearch.ml/123/456',
-              uri_thumbnail: 'http://storage.fluentsearch.ml/123/456',
-              createAt: new Date(),
-              updateAt: new Date(),
+              label: 'testx.jpeg',
             },
-
             {
-              label: 'test1.jpeg',
-              uri: 'http://storage.fluentsearch.ml/123/456',
-              uri_thumbnail: 'http://storage.fluentsearch.ml/123/456',
-              createAt: new Date(),
-              updateAt: new Date(),
+              label: 'testy.jpeg',
             },
-          ],
+            {
+              label: 'testz.jpeg',
+            },
+          ].map(el => ({
+            ...el,
+            uri_thumbnail: genUri(),
+            uri: genUri(),
+            createAt: new Date(),
+            updateAt: new Date(),
+          })),
         },
       ],
     };
