@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcryptjs';
 import { LeanDocument, Model } from 'mongoose';
+import { MinioService } from 'nestjs-minio-client';
 import { UserNotExistsException } from '../common/exception/user.not-exists.exception';
 import { ConfigService } from '../config/config.service';
 import { UserRegisterInput } from './dtos/inputs/user-register.input';
@@ -21,6 +22,7 @@ export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     private readonly configService: ConfigService,
+    private readonly minioClient: MinioService,
   ) {}
 
   async getUsers(skip = 0, limit = 1000): Promise<UsersQueryReturns> {
@@ -58,6 +60,7 @@ export class UserService {
     };
 
     const doc = new this.userModel(user);
+    await this.createBucket(doc._id);
     return doc.save();
   }
 
@@ -78,5 +81,15 @@ export class UserService {
     const user = await this.userModel.findOne({ mainEmail: email }).lean();
     if (!user) throw new UserNotExistsException();
     return user;
+  }
+
+  private async createBucket(id: string): Promise<void> {
+    try {
+      await this.minioClient.client.makeBucket(`${id}`, UserZoneEnum.TH1);
+    } catch (err) {
+      Logger.error(err);
+      throw err;
+    }
+    return;
   }
 }
