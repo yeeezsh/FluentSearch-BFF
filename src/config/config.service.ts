@@ -21,6 +21,9 @@ export class ConfigService {
       HOSTNAME,
       MAIN_HOSTNAME,
       STORAGE_ENDPOINT,
+      MINIO_ACCESS_KEY,
+      MINIO_SECRET_KEY,
+      MINIO_SERVER_ENDPOINT,
     } = process.env as ConfigEnvType;
     return {
       hostname: HOSTNAME,
@@ -51,6 +54,11 @@ export class ConfigService {
         expires: Number(SESSION_EXPIRES || 86400000), // one day
       },
       storage_endpoint: STORAGE_ENDPOINT,
+      minio: {
+        endpoint: MINIO_SERVER_ENDPOINT,
+        access_key: MINIO_ACCESS_KEY,
+        secret_key: MINIO_SECRET_KEY,
+      },
     };
   }
 }

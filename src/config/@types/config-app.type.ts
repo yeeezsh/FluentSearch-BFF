@@ -23,4 +23,9 @@ export type ConfigAppProviderType = {
     expires: number;
   };
   storage_endpoint: string;
+  minio: {
+    endpoint: string;
+    access_key: string;
+    secret_key: string;
+  };
 };

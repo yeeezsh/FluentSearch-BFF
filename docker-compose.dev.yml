@@ -19,6 +19,9 @@ services:
       SESSION_EXPIRES: 86400000
       STORAGE_ENDPOINT: storage.fluentsearch.ml
       PORT: 5000
+      MINIO_ACCESS_KEY: 'root'
+      MINIO_SECRET_KEY: '12345678'
+      MINIO_SERVER_ENDPOINT: 'minio'
     build:
       context: ./
       dockerfile: Dockerfile
