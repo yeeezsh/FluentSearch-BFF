@@ -20,6 +20,7 @@ export class ConfigService {
       SESSION_SECRET,
       HOSTNAME,
       MAIN_HOSTNAME,
+      STORAGE_ENDPOINT,
     } = process.env as ConfigEnvType;
     return {
       hostname: HOSTNAME,
@@ -49,6 +50,7 @@ export class ConfigService {
         secret: SESSION_SECRET || 'FluentSearch.SESSION.SECRET',
         expires: Number(SESSION_EXPIRES || 86400000), // one day
       },
+      storage_endpoint: STORAGE_ENDPOINT,
     };
   }
 }

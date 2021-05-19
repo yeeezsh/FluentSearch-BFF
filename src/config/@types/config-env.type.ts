@@ -13,6 +13,7 @@ export enum ConfigEnvEnum {
   PORT = 'PORT',
   HOSTNAME = 'HOSTNAME',
   MAIN_HOSTNAME = 'MAIN_HOSTNAME',
+  STORAGE_ENDPOINT = 'STORAGE_ENDPOINT',
 }
 
 export type ConfigEnvType = {
