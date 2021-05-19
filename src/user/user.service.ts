@@ -1,4 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcryptjs';
 import { LeanDocument, Model } from 'mongoose';
@@ -60,7 +64,12 @@ export class UserService {
     };
 
     const doc = new this.userModel(user);
-    await this.createBucket(doc._id);
+    try {
+      await this.createBucket(doc._id);
+    } catch (err) {
+      Logger.error('bucket create error', 'Minio');
+      throw new InternalServerErrorException('minio create bucket error');
+    }
     return doc.save();
   }
 
