@@ -30,7 +30,7 @@ describe('AppResolver GraphQL', () => {
       .send({
         query: print(gql`
           {
-            serverStatus {
+            ServerStatus {
               status
             }
           }
@@ -38,7 +38,7 @@ describe('AppResolver GraphQL', () => {
       })
       .expect(res =>
         expect(res.body.data).toEqual({
-          serverStatus: {
+          ServerStatus: {
             ...expectedReturns,
           },
         }),
