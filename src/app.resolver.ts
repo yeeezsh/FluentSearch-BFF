@@ -9,7 +9,7 @@ export class AppModel {
 @Resolver(() => AppModel)
 export class AppResolver {
   @Query(() => AppModel)
-  async serverStatus(): Promise<AppModel> {
+  async ServerStatus(): Promise<AppModel> {
     return { status: 200 };
   }
 }

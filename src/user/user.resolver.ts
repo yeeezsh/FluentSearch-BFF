@@ -15,29 +15,29 @@ export class UserResolver {
 
   // user
   @Query(() => UserWithId, { name: 'User', nullable: true })
-  async getUser(@Args('id', { type: () => String }) id: string) {
+  async GetUser(@Args('id', { type: () => String }) id: string) {
     return this.userService.getById(id);
   }
 
   // user by session
   @UseGuards(JwtAuthGuard)
   @Query(() => UserWithId, { nullable: true })
-  async getUserBySession(@Context('req') req: Request) {
+  async GetUserBySession(@Context('req') req: Request) {
     const session = req.session as Record<string, any>;
     const id = session.user._id;
     return this.userService.getById(id);
   }
 
   @UseFilters(UserExceptionFilters)
-  @Mutation(() => UserWithId, { name: 'CreateUser' })
-  async createUser(
+  @Mutation(() => UserWithId)
+  async CreateUser(
     @Args('UserRegisterInput') userRegisterInput: UserRegisterInput,
   ) {
     return this.userService.createUser(userRegisterInput);
   }
 
-  @Mutation(() => UserWithId, { name: 'UpdateUser' })
-  async updateUser(
+  @Mutation(() => UserWithId)
+  async UpdateUser(
     @Args('UserUpdateInput') userRegisterInput: UserUpdateInput,
   ) {
     return this.userService.updateUser(userRegisterInput);
@@ -45,7 +45,7 @@ export class UserResolver {
 
   // users
   @Query(() => [UserWithId], { name: 'Users' })
-  async getUsers(@Args() skipLimit: SkipLimitArgs) {
+  async GetUsers(@Args() skipLimit: SkipLimitArgs) {
     const { skip, limit } = skipLimit;
     return this.userService.getUsers(skip, limit);
   }
