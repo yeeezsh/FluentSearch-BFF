@@ -63,14 +63,24 @@ export class UserService {
       updateDate: new Date(),
     };
 
-    const doc = new this.userModel(user);
+    let doc;
     try {
-      await this.createBucket(doc._id);
+      doc = new this.userModel(user);
+    } catch (err) {}
+
+    const saved = await doc?.save();
+    if (!saved) {
+      Logger.error('user create error', 'MongoDB');
+      throw new InternalServerErrorException('user create error');
+    }
+
+    try {
+      await this.createBucket(doc?._id);
     } catch (err) {
       Logger.error('bucket create error', 'Minio');
       throw new InternalServerErrorException('minio create bucket error');
     }
-    return doc.save();
+    return saved;
   }
 
   async updateUser(payload: UserUpdateInput): Promise<UserDocument> {
