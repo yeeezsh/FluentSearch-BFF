@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
+import {
+  UserPackageEnum,
+  UserRoleEnum,
+  UserZoneEnum,
+} from 'fluentsearch-types';
 import { IUser } from '../interfaces/user';
-import { UserPackageEnum } from '../schemas/enums/user-package.enum';
-import { UserRoleEnum } from '../schemas/enums/user-role.enum';
-import { UserZoneEnum } from '../schemas/enums/user.zone.enum';
 import { UserToken } from './user-token.model';
 
 // enums
@@ -44,10 +46,10 @@ export class User implements IUser {
 
   //TODO: need Date as a scalar type
   @Field(() => String)
-  createDate: Date;
+  createAt: Date;
 
   @Field(() => String)
-  updateDate: Date;
+  updateAt: Date;
 }
 
 @ObjectType()
