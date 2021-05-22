@@ -2,11 +2,11 @@ import { getModelToken } from '@nestjs/mongoose';
 import {
   UserPackageEnum,
   UserRoleEnum,
+  USERS_SCHEMA_NAME,
   UserZoneEnum,
 } from 'fluentsearch-types';
 import { Types } from 'mongoose';
 import { IUser } from '../interfaces/user';
-import { User } from '../models/user.model';
 
 export const MOCK_USER_DOCUMENT = {
   _id: Types.ObjectId(),
@@ -46,7 +46,7 @@ export const MOCK_USER_VALUE = {
 };
 
 export const MOCK_USER_MODEL = {
-  provide: getModelToken(User.name),
+  provide: getModelToken(USERS_SCHEMA_NAME),
   useValue: MOCK_USER_VALUE,
 };
 
