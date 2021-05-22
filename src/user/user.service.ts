@@ -9,6 +9,7 @@ import {
   UserDocument,
   UserPackageEnum,
   UserRoleEnum,
+  USERS_SCHEMA_NAME,
   UserZoneEnum,
 } from 'fluentsearch-types';
 import { LeanDocument, Model } from 'mongoose';
@@ -26,7 +27,8 @@ import { User } from './models/user.model';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(USERS_SCHEMA_NAME)
+    private readonly userModel: Model<UserDocument>,
     private readonly configService: ConfigService,
     private readonly minioClient: MinioService,
   ) {}
