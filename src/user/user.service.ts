@@ -5,6 +5,12 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcryptjs';
+import {
+  UserDocument,
+  UserPackageEnum,
+  UserRoleEnum,
+  UserZoneEnum,
+} from 'fluentsearch-types';
 import { LeanDocument, Model } from 'mongoose';
 import { MinioService } from 'nestjs-minio-client';
 import { UserNotExistsException } from '../common/exception/user.not-exists.exception';
@@ -16,10 +22,6 @@ import {
   UsersQueryReturns,
 } from './models/user-query-returns.model';
 import { User } from './models/user.model';
-import { UserPackageEnum } from './schemas/enums/user-package.enum';
-import { UserRoleEnum } from './schemas/enums/user-role.enum';
-import { UserZoneEnum } from './schemas/enums/user.zone.enum';
-import { UserDocument } from './schemas/user.schema';
 
 @Injectable()
 export class UserService {

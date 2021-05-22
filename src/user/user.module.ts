@@ -1,11 +1,11 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { USERS_SCHEMA_NAME } from 'fluentsearch-types';
+import userSchema from 'fluentsearch-types/dist/entity/user.entity';
 import { MinioModule } from 'nestjs-minio-client';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/config.service';
-import { User } from './models/user.model';
-import userSchema from './schemas/user.schema';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
 
@@ -15,7 +15,7 @@ import { UserService } from './user.service';
     forwardRef(() => AuthenticationModule),
     MongooseModule.forFeature([
       {
-        name: User.name,
+        name: USERS_SCHEMA_NAME,
         schema: userSchema,
       },
     ]),
