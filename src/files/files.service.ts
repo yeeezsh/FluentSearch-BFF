@@ -14,7 +14,7 @@ export class FilesService {
   ) {}
 
   async getRecentFilesByUser(userId: string, skip: number, limit: number) {
-    const result = await this.userModel
+    return this.userModel
       .aggregate<RecentPreviews>([
         { $match: { owner: userId } },
         { $sort: { createAt: -1 } },
@@ -79,7 +79,5 @@ export class FilesService {
         },
       ])
       .allowDiskUse(true);
-
-    return result;
   }
 }
