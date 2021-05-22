@@ -1,7 +1,9 @@
+import {
+  UserPackageEnum,
+  UserRoleEnum,
+  UserZoneEnum,
+} from 'fluentsearch-types';
 import { UserToken } from '../models/user-token.model';
-import { UserPackageEnum } from '../schemas/enums/user-package.enum';
-import { UserRoleEnum } from '../schemas/enums/user-role.enum';
-import { UserZoneEnum } from '../schemas/enums/user.zone.enum';
 
 export interface IUser {
   mainEmail: string;

@@ -1,10 +1,12 @@
 import { getModelToken } from '@nestjs/mongoose';
+import {
+  UserPackageEnum,
+  UserRoleEnum,
+  UserZoneEnum,
+} from 'fluentsearch-types';
 import { Types } from 'mongoose';
 import { IUser } from '../interfaces/user';
 import { User } from '../models/user.model';
-import { UserPackageEnum } from '../schemas/enums/user-package.enum';
-import { UserRoleEnum } from '../schemas/enums/user-role.enum';
-import { UserZoneEnum } from '../schemas/enums/user.zone.enum';
 
 export const MOCK_USER_DOCUMENT = {
   _id: Types.ObjectId(),
