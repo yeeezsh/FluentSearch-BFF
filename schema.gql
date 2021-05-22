@@ -24,7 +24,7 @@ type Query {
 
 type RecentFile {
   createAt: String!
-  label: String!
+  original_filename: String!
   updateAt: String!
   uri: String!
   uri_thumbnail: String!
