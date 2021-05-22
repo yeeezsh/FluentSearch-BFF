@@ -24,8 +24,8 @@ export const MOCK_USER_DOCUMENT = {
   //   meta
   zone: UserZoneEnum.TH1,
 
-  createDate: new Date(),
-  updateDate: new Date(),
+  createAt: new Date(),
+  updateAt: new Date(),
 } as IUser & { _id: Types.ObjectId };
 
 // jest

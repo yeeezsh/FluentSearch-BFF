@@ -46,10 +46,10 @@ export class User implements IUser {
 
   //TODO: need Date as a scalar type
   @Field(() => String)
-  createDate: Date;
+  createAt: Date;
 
   @Field(() => String)
-  updateDate: Date;
+  updateAt: Date;
 }
 
 @ObjectType()

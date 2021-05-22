@@ -18,6 +18,6 @@ export interface IUser {
   zone: UserZoneEnum;
   deactivate?: boolean;
   //TODO: need Date as a scalar type
-  createDate: Date;
-  updateDate: Date;
+  createAt: Date;
+  updateAt: Date;
 }

@@ -61,8 +61,8 @@ export class UserService {
 
       // meta
       zone: UserZoneEnum.TH1,
-      createDate: new Date(),
-      updateDate: new Date(),
+      createAt: new Date(),
+      updateAt: new Date(),
     };
 
     let doc;
