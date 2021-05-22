@@ -5,6 +5,13 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcryptjs';
+import {
+  UserDocument,
+  UserPackageEnum,
+  UserRoleEnum,
+  USERS_SCHEMA_NAME,
+  UserZoneEnum,
+} from 'fluentsearch-types';
 import { LeanDocument, Model } from 'mongoose';
 import { MinioService } from 'nestjs-minio-client';
 import { UserNotExistsException } from '../common/exception/user.not-exists.exception';
@@ -16,15 +23,12 @@ import {
   UsersQueryReturns,
 } from './models/user-query-returns.model';
 import { User } from './models/user.model';
-import { UserPackageEnum } from './schemas/enums/user-package.enum';
-import { UserRoleEnum } from './schemas/enums/user-role.enum';
-import { UserZoneEnum } from './schemas/enums/user.zone.enum';
-import { UserDocument } from './schemas/user.schema';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(USERS_SCHEMA_NAME)
+    private readonly userModel: Model<UserDocument>,
     private readonly configService: ConfigService,
     private readonly minioClient: MinioService,
   ) {}
@@ -59,8 +63,8 @@ export class UserService {
 
       // meta
       zone: UserZoneEnum.TH1,
-      createDate: new Date(),
-      updateDate: new Date(),
+      createAt: new Date(),
+      updateAt: new Date(),
     };
 
     let doc;

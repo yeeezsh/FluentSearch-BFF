@@ -44,11 +44,6 @@ input UserLoginInputDTO {
   password: String!
 }
 
-enum UserPackageEnum {
-  freeUser
-  paidUser
-}
-
 enum UserPackageEnumSession {
   freeUser
   paidUser
@@ -58,12 +53,6 @@ input UserRegisterInput {
   mainEmail: String!
   name: String!
   password: String!
-}
-
-enum UserRoleEnum {
-  admin
-  staff
-  user
 }
 
 enum UserRoleEnumSession {
@@ -94,22 +83,17 @@ input UserUpdateInput {
 
 type UserWithId {
   _id: String!
-  createDate: String!
+  createAt: String!
   deactivate: Boolean
   email: [String!]!
   mainEmail: String!
   name: String
   oauth: UserToken!
-  package: UserPackageEnum!
+  package: UserPackageEnumSession!
   password: String!
-  role: UserRoleEnum!
-  updateDate: String!
-  zone: UserZoneEnum!
-}
-
-enum UserZoneEnum {
-  TH1
-  TH2
+  role: UserRoleEnumSession!
+  updateAt: String!
+  zone: UserZoneEnumSession!
 }
 
 enum UserZoneEnumSession {

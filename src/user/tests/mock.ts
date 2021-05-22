@@ -1,10 +1,12 @@
 import { getModelToken } from '@nestjs/mongoose';
+import {
+  UserPackageEnum,
+  UserRoleEnum,
+  USERS_SCHEMA_NAME,
+  UserZoneEnum,
+} from 'fluentsearch-types';
 import { Types } from 'mongoose';
 import { IUser } from '../interfaces/user';
-import { User } from '../models/user.model';
-import { UserPackageEnum } from '../schemas/enums/user-package.enum';
-import { UserRoleEnum } from '../schemas/enums/user-role.enum';
-import { UserZoneEnum } from '../schemas/enums/user.zone.enum';
 
 export const MOCK_USER_DOCUMENT = {
   _id: Types.ObjectId(),
@@ -22,8 +24,8 @@ export const MOCK_USER_DOCUMENT = {
   //   meta
   zone: UserZoneEnum.TH1,
 
-  createDate: new Date(),
-  updateDate: new Date(),
+  createAt: new Date(),
+  updateAt: new Date(),
 } as IUser & { _id: Types.ObjectId };
 
 // jest
@@ -44,7 +46,7 @@ export const MOCK_USER_VALUE = {
 };
 
 export const MOCK_USER_MODEL = {
-  provide: getModelToken(User.name),
+  provide: getModelToken(USERS_SCHEMA_NAME),
   useValue: MOCK_USER_VALUE,
 };
 

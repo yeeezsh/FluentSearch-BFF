@@ -1,4 +1,4 @@
-import { OAuthProviderEnum } from '../schemas/enums/oauth-provider.enum';
+import { OAuthProviderEnum } from 'fluentsearch-types';
 
 export interface IUserToken {
   provider: OAuthProviderEnum;
