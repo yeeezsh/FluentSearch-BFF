@@ -1,62 +1,24 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
-import { ConfigService } from '../config/config.service';
+import { Args, Context, Query, Resolver } from '@nestjs/graphql';
+import { Request } from 'express';
 import { SkipLimitArgs } from '../user/dtos/args/skip-limit.args';
 import { RecentFiles } from './dtos/recent-files.dto';
+import { FilesService } from './files.service';
 
 @Resolver()
 export class FilesResolver {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(private readonly fileService: FilesService) {}
   @Query(() => RecentFiles)
-  async GetRecentFiles(@Args() skipLimit: SkipLimitArgs): Promise<RecentFiles> {
-    const genUri = () =>
-      `http://${this.configService.get().storage_endpoint}/${Math.random()
-        .toPrecision(4)
-        .slice(4)}/${Math.random()
-        .toPrecision(8)
-        .slice(2)}`;
-    return {
-      result: [
-        {
-          date: new Date(),
-          files: [
-            {
-              label: 'test.jpeg',
-            },
-            {
-              label: 'test1.jpeg',
-            },
-            {
-              label: 'test2.jpeg',
-            },
-          ].map(el => ({
-            ...el,
-            uri_thumbnail: genUri(),
-            uri: genUri(),
-            createAt: new Date(),
-            updateAt: new Date(),
-          })),
-        },
-        {
-          date: new Date('01/01/1999'),
-          files: [
-            {
-              label: 'testx.jpeg',
-            },
-            {
-              label: 'testy.jpeg',
-            },
-            {
-              label: 'testz.jpeg',
-            },
-          ].map(el => ({
-            ...el,
-            uri_thumbnail: genUri(),
-            uri: genUri(),
-            createAt: new Date(),
-            updateAt: new Date(),
-          })),
-        },
-      ],
-    };
+  async GetRecentFiles(
+    @Args() skipLimit: SkipLimitArgs,
+    @Context('req') req: Request,
+  ): Promise<RecentFiles> {
+    const session = req.session as Record<string, any>;
+    const id = session.user._id;
+    const result = await this.fileService.getRecentFilesByUser(
+      id,
+      skipLimit.skip,
+      skipLimit.limit,
+    );
+    return { result };
   }
 }

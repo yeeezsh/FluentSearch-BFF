@@ -3,7 +3,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 class RecentFile {
   @Field()
-  label: string;
+  original_filename: string;
 
   @Field()
   uri: string;
@@ -19,7 +19,7 @@ class RecentFile {
 }
 
 @ObjectType()
-class RecentPreviews {
+export class RecentPreviews {
   @Field(() => String)
   date: Date;
 
