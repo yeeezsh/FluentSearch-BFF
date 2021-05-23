@@ -56,6 +56,7 @@ export class FilesService {
             uri: 1,
             uri_thumbnail: 1,
             createAt: 1,
+            updateAt: 1,
           },
         },
 
