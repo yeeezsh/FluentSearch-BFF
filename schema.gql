@@ -6,6 +6,45 @@ type AppModel {
   status: Int!
 }
 
+type FileDurationMetaDTO {
+  hour: Float!
+  minute: Float!
+  original: String!
+  second: Float!
+}
+
+type FileMetaDTO {
+  bitrate: Float
+  codec: String
+  contentType: String!
+  duration: FileDurationMetaDTO
+  extension: String!
+  fps: Float
+  height: Float!
+  sha1: String
+  size: Float!
+  width: Float!
+}
+
+type FileModelDTO {
+  _id: String!
+  createAt: String!
+  meta: FileMetaDTO!
+  original_filename: String!
+  owner: String!
+  type: FileTypeEnum!
+  updateAt: String!
+  uri: String!
+  zone: ZoneEnum!
+}
+
+enum FileTypeEnum {
+  Image
+  ImageThumbnail
+  Video
+  VideoThumbnail
+}
+
 type Mutation {
   CreateUser(UserRegisterInput: UserRegisterInput!): UserWithId!
   Login(UserLoginInputDTO: UserLoginInputDTO!): UserSessionDTO!
@@ -15,6 +54,7 @@ type Mutation {
 }
 
 type Query {
+  GetFileById(id: String!): FileModelDTO!
   GetRecentFiles(limit: Int = 1000, skip: Int = 0): RecentFiles!
   GetUserBySession: UserWithId
   ServerStatus: AppModel!
@@ -99,4 +139,8 @@ type UserWithId {
 enum UserZoneEnumSession {
   TH1
   TH2
+}
+
+enum ZoneEnum {
+  TH
 }
