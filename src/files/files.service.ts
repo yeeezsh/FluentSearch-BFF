@@ -76,7 +76,13 @@ export class FilesService {
         //   group to date
         {
           $addFields: {
-            date: { $dateToString: { format: '%d-%m-%Y', date: '$createAt' } },
+            date: {
+              $dateToString: {
+                format: '%d-%m-%Y',
+                date: '$createAt',
+                timezone: 'Asia/Bangkok',
+              },
+            },
           },
         },
         {
