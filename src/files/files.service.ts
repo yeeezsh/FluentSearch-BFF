@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FileDocument, FILES_SCHEMA_NAME } from 'fluentsearch-types';
-import { Model } from 'mongoose';
+import { LeanDocument, Model } from 'mongoose';
+import { FileNotExisistException } from '../common/exception/file-not-exists-exception';
+import { InvalidUserAccessException } from '../common/exception/invalid-user-access.exception';
 import { ConfigService } from '../config/config.service';
 import { RecentPreviews } from './dtos/recent-files.dto';
 
@@ -9,12 +11,22 @@ import { RecentPreviews } from './dtos/recent-files.dto';
 export class FilesService {
   constructor(
     @InjectModel(FILES_SCHEMA_NAME)
-    private readonly userModel: Model<FileDocument>,
+    private readonly fileModel: Model<FileDocument>,
     private readonly configService: ConfigService,
   ) {}
 
+  async getFile(
+    fileId: string,
+    owner: string,
+  ): Promise<LeanDocument<FileDocument>> {
+    const file = await this.fileModel.findById(fileId).lean();
+    if (!file) throw new FileNotExisistException();
+    if (file.owner !== owner) throw new InvalidUserAccessException();
+    return file;
+  }
+
   async getRecentFilesByUser(userId: string, skip: number, limit: number) {
-    return this.userModel
+    return this.fileModel
       .aggregate<RecentPreviews>([
         { $match: { owner: userId } },
         { $sort: { createAt: -1 } },
