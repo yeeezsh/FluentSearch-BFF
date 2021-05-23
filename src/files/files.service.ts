@@ -50,10 +50,11 @@ export class FilesService {
               $concat: [
                 `http://${this.configService.get().storage_endpoint}/`,
                 '$owner',
-                '/thumbnail',
+                '/',
                 {
                   $toString: '$_id',
                 },
+                '/thumbnail',
               ],
             },
           },
