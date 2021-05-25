@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
+import { GraphQLFederationModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppResolver } from './app.resolver';
@@ -8,8 +8,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { ConfigDatabaseService } from './config/config.database.service';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
-import { UserModule } from './user/user.module';
 import { FilesModule } from './files/files.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -19,31 +19,33 @@ import { FilesModule } from './files/files.module';
       useClass: ConfigDatabaseService,
     }),
     UserModule,
-    GraphQLModule.forRootAsync({
+    GraphQLFederationModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        path: '/graphql',
-        introspection: true,
-        playground: {
-          settings: {
-            'request.credentials': 'include',
+      useFactory: (configService: ConfigService) => {
+        return {
+          path: '/graphql',
+          introspection: true,
+          playground: {
+            settings: {
+              'request.credentials': 'include',
+            },
           },
-        },
-        cors: {
-          origin: configService.get().origin,
-          credentials: true,
-        },
-        installSubscriptionHandlers: true,
-        autoSchemaFile: 'schema.gql',
-        sortSchema: true,
-        context: ({ req, res, payload, connection }) => ({
-          req,
-          res,
-          payload,
-          connection,
-        }),
-      }),
+          cors: {
+            origin: configService.get().origin,
+            credentials: true,
+          },
+          installSubscriptionHandlers: false,
+          autoSchemaFile: 'schema.gql',
+          sortSchema: true,
+          context: ({ req, res, payload, connection }) => ({
+            req,
+            res,
+            payload,
+            connection,
+          }),
+        };
+      },
     }),
     AuthenticationModule,
     FilesModule,
