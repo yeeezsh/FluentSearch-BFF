@@ -21,11 +21,6 @@ export class AuthenticationService {
       httpOnly: true,
       domain: this.configService.get().main_hostname,
     });
-
-    req.res?.cookie('Authorization', `Bearer ${token}`, {
-      httpOnly: true,
-      domain: 'localhost',
-    });
   }
 
   async userLogin(
