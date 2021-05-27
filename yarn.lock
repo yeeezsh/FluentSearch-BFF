@@ -4462,10 +4462,10 @@ flatted@^2.0.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
 
-fluentsearch-types@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/fluentsearch-types/-/fluentsearch-types-0.8.1.tgz#47fa4d02b709145fef1c3c9c8b3c4c0561eeee50"
-  integrity sha512-MMo7UhI6Ssc8wf1rQ3yHUb6JgSMjE/qROhdT0B/5B/L9Hx16nlGN4HqnW/rJIeYJPAsASqHGmQWFP/Dvt7ECKA==
+fluentsearch-types@^0.9.7:
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/fluentsearch-types/-/fluentsearch-types-0.9.7.tgz#8d5ab91b26db6fa5592a7f3aca26cb306ed6d63d"
+  integrity sha512-/qyzUX47DU+fNIr+GRqpuKo/kMQUf18uhZZxDWjOYSO3kRA5ma3Qp2QYIGMBlBw48m13ngCbmzFeV0v06R4+GA==
   dependencies:
     mongoose "^5.12.10"
 
