@@ -70,6 +70,7 @@ export class FilesService {
             uri_thumbnail: 1,
             createAt: 1,
             updateAt: 1,
+            type: 1,
           },
         },
 

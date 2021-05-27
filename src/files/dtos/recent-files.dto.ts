@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { FileTypeEnum } from 'fluentsearch-types';
 
 @ObjectType()
 class RecentFile {
@@ -16,6 +17,9 @@ class RecentFile {
 
   @Field(() => String)
   updateAt: Date;
+
+  @Field(() => String)
+  type: FileTypeEnum;
 }
 
 @ObjectType()
