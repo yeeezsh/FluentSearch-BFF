@@ -8,7 +8,6 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { ConfigDatabaseService } from './config/config.database.service';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
-import { FilesModule } from './files/files.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -48,7 +47,6 @@ import { UserModule } from './user/user.module';
       },
     }),
     AuthenticationModule,
-    FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
